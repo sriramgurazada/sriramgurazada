@@ -1,6 +1,6 @@
 # Devi Venkata Sai Sriram Chandra Gurazada
 
-### 👋 Welcome to my GitHub!  
+### 👋 Welcome to my Profile!  
 I am a **Computer Science** master's student at the **University of Southern California (USC)** with a professional focus on **Identity and Access Management (IAM)**, **Artificial Intelligence (AI)**, **Machine Learning (ML)**, and **Cloud Technologies**. I bring hands-on expertise in building secure IAM architectures, AI-driven solutions, and scalable cloud systems, along with automation and monitoring capabilities that drive efficient operations.
 
 ---
