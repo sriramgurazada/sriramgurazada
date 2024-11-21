@@ -53,9 +53,7 @@ I am a **Computer Science** master's student at the **University of Southern Cal
   
 •	Developed a PC game with Unity and C# as part of a USC coursework project.
 •	Implemented a data analytics pipeline to refine game levels based on player interactions.
-•	Collaborated with teammates to merge creative design with technical development.
-•	 [Playable link](https://george230310.github.io/526-Gold/index.html)
-•	 [GitHub Repository](https://github.com/George230310/CS526_Temporal_Nexus)
+•	Collaborated with teammates to merge creative design with technical development. [Playable link](https://george230310.github.io/526-Gold/index.html) [GitHub Repository](https://github.com/George230310/CS526_Temporal_Nexus)
 
 ### Research and Publications
 
@@ -68,9 +66,8 @@ I am a **Computer Science** master's student at the **University of Southern Cal
 •	Achieved 96% accuracy with Random Forest on large datasets by reducing overfitting and improving classification performance through hyperparameter tuning.
 •	Analyzed model performance using metrics like precision, recall, F1-score, and correctly classified instances. [Read the Publication](https://www.irjet.net/archives/V9/i8/IRJET-V9I8135.pdf)
 
-
-- 
 ### ☁️ Cloud, Automation & Monitoring
+
 - **IAM and System Automation**: Automated CI/CD workflows for IAM configurations and system health checks, reducing manual intervention using Jenkins, Docker, and AWS services.
 - **Monitoring & Performance Analysis**: Leveraged Splunk and Grafana to track system metrics and analyze application performance for enhanced operational visibility.
 
