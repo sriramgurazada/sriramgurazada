@@ -37,14 +37,39 @@ I am a **Computer Science** master's student at the **University of Southern Cal
   
 - **Assessing and Masking PII Leakage in Documents**: Built a high-accuracy NER model with DeBERTa for detecting and masking PII, achieving strong privacy protection scores.
 
-- **Bias Mitigation and Adversarial Training**: Designed models to detect bias and trained adversarial models with GANs to enhance robustness in RAG applications.
+- **Evaluating and Stabilizing Retrieval Augmented LLMs**:
+•	Enhanced RAG systems with PEFT (LoRA), improving context relevance by 30%.
+•	Optimized retrieval accuracy in RAG using FAISS and BM25, increasing BLEU scores by 20%.
+•	Mitigated hallucinations and bias, ensuring reliable and coherent outputs by neutralizing and normalizing Gender vectors.
 
-- **Heuristic Approach for Zoomed Image Detection of Wild Animals**: Developed a CNN-based model for wildlife detection with 93.6% accuracy, contributing to conservation efforts. [Read the Publication](https://www.irjet.net/archives/V7/i6/IRJET-V7I61073.pdf)
 
 ### End-to-End Projects
 
 - **Hospital Management System**: Engineered a comprehensive React-based front end for managing hospital workflows, including patient appointment booking and doctor searches, with a Node.js and GraphQL backend for efficient data management. Established a MongoDB database for real-time health record tracking, improving accuracy and accessibility for medical staff.[GitHub Repository](https://github.com/sriramgurazada/Hospital-Management-System)
 
+### Game Development
+
+- **Temporal Nexus**:
+  
+•	Developed a PC game with Unity and C# as part of a USC coursework project.
+•	Implemented a data analytics pipeline to refine game levels based on player interactions.
+•	Collaborated with teammates to merge creative design with technical development.
+•	 [Playable link](https://george230310.github.io/526-Gold/index.html)
+•	 [GitHub Repository](https://github.com/George230310/CS526_Temporal_Nexus)
+
+### Research and Publications
+
+- **Heuristic Approach for Zoomed Image Detection of Wild Animals**: Developed a CNN-based model for wildlife detection with 93.6% accuracy, contributing to conservation efforts. [Read the Publication](https://www.irjet.net/archives/V7/i6/IRJET-V7I61073.pdf)
+
+- **Smart contracts using blockchain for hospital management system**: Published a research paper on using Consortium Block chain technology in Hospitals for Patients health records. By introducing this system, we can make the system a common system EHR throughout the hospitals so whatever hospital, the patient might go to, he can access his data without carrying all the reports with him. Here the chance of data tampering is completely eradicated and data is secured by utilizing secured hash algorithms. This system helps secure data and provide common data to all the hospitals. [Read the Publication](http://sersc.org/journals/index.php/IJAST/article/view/30660)
+
+- **Term Deposit subscription prediction**:
+•	Conducted classification of term deposit subscriptions using Random Forest, Decision Tree (J48), and Logistic Regression models.
+•	Achieved 96% accuracy with Random Forest on large datasets by reducing overfitting and improving classification performance through hyperparameter tuning.
+•	Analyzed model performance using metrics like precision, recall, F1-score, and correctly classified instances. [Read the Publication](https://www.irjet.net/archives/V9/i8/IRJET-V9I8135.pdf)
+
+
+- 
 ### ☁️ Cloud, Automation & Monitoring
 - **IAM and System Automation**: Automated CI/CD workflows for IAM configurations and system health checks, reducing manual intervention using Jenkins, Docker, and AWS services.
 - **Monitoring & Performance Analysis**: Leveraged Splunk and Grafana to track system metrics and analyze application performance for enhanced operational visibility.
