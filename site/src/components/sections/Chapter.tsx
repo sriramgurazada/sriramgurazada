@@ -12,6 +12,16 @@ type Props = {
 };
 
 /**
+ * Splits a leading article off a chapter title so the card can set it above
+ * the noun. Titles without one fall back to a single line.
+ */
+function splitTitle(title: string): [string, string] {
+  const [first, ...rest] = title.split(" ");
+  if (rest.length && /^(the|a|an)$/i.test(first)) return [first, rest.join(" ")];
+  return ["", title];
+}
+
+/**
  * One piece of work. Rendered twice per chapter — once inside the pinned
  * frame for wide screens, once in normal flow for narrow ones — and hidden
  * by breakpoint, so only one copy is ever on screen.
@@ -61,6 +71,8 @@ export default function Chapter({ chapter, index }: Props) {
   const frame = useRef<HTMLDivElement>(null);
   const flow = useRef<HTMLDivElement>(null);
   const plate = chapterPlate(index);
+  // "The Gate" is set as a small "The" over a large "Gate".
+  const [article, noun] = splitTitle(chapter.title);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -306,14 +318,31 @@ export default function Chapter({ chapter, index }: Props) {
                     {chapter.stamp}
                   </p>
                 </div>
-                <div className="overflow-hidden">
-                  <h2
-                    data-era-line
-                    className="title-epic text-[15vw] leading-[0.82] text-bone sm:text-[13vw]"
-                  >
-                    {chapter.title}
-                  </h2>
-                </div>
+                {/* Set as an article over a noun rather than one long line.
+                    Otherwise "The Archive" wraps and "The Gate" does not, and
+                    a run of title cards that break differently every time
+                    reads as an accident. */}
+                <h2 className="title-epic text-bone">
+                  {article && (
+                    <span className="block overflow-hidden">
+                      <span
+                        data-era-line
+                        className="block text-[4.5vw] leading-none text-bone/50 sm:text-[2.6vw]"
+                        style={{ letterSpacing: "0.34em", textIndent: "0.34em" }}
+                      >
+                        {article}
+                      </span>
+                    </span>
+                  )}
+                  <span className="block overflow-hidden">
+                    <span
+                      data-era-line
+                      className="mt-2 block text-[16vw] leading-[0.84] sm:mt-3 sm:text-[16.5vw]"
+                    >
+                      {noun}
+                    </span>
+                  </span>
+                </h2>
                 <div className="overflow-hidden">
                   <p
                     data-era-line

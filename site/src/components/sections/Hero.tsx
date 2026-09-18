@@ -158,10 +158,12 @@ export default function Hero() {
               Devi Venkata Sai Sriram Chandra
             </span>
 
-            {/* Sized in vw so the card always fills the frame edge to edge.
-                The steps down are where a single unbreakable line of Cinzel
-                would otherwise run past the gutters. */}
-            <h1 className="title-epic flex overflow-hidden text-[13vw] leading-[0.82] sm:text-[13.5vw] xl:text-[15vw]">
+            {/* Sized so the title fills the frame at the *end* of the scroll,
+                once the matte has retracted and the block has scaled up.
+                Cinzel needs roughly 6.2em for these eight characters, so at
+                rest it sits comfortably inside the 2.39:1 matte and grows
+                into the open frame rather than through it. */}
+            <h1 className="title-epic flex overflow-hidden text-[11vw] leading-[0.82] lg:text-[11.8vw]">
               {TITLE.map((char, i) => (
                 <span key={`${char}-${i}`} data-title-char className="metal inline-block">
                   {char}
