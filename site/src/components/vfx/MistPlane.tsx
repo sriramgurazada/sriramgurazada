@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { scene } from "@/lib/scene";
@@ -106,7 +107,10 @@ const fragment = /* glsl */ `
 `;
 
 export default function MistPlane() {
-  const uniforms = useConst(() => ({
+  // Written through the material — see the note in PhotoStage.
+  const material = useRef<THREE.ShaderMaterial>(null);
+
+  const initialUniforms = useConst(() => ({
     uTime: { value: 0 },
     uAspect: { value: 1.7 },
     uIntensity: { value: 0 },
@@ -117,22 +121,26 @@ export default function MistPlane() {
   }));
 
   useFrame((state, delta) => {
-    uniforms.uTime.value += delta;
-    uniforms.uAspect.value = state.size.width / Math.max(state.size.height, 1);
-    uniforms.uIntensity.value += (scene.intensity - uniforms.uIntensity.value) * 0.05;
-    uniforms.uVelocity.value += (scene.velocity - uniforms.uVelocity.value) * 0.1;
-    uniforms.uExpansion.value += (scene.expansion - uniforms.uExpansion.value) * 0.08;
-    uniforms.uMist.value.setRGB(scene.mist[0], scene.mist[1], scene.mist[2]);
-    uniforms.uEmber.value.setRGB(scene.ember[0], scene.ember[1], scene.ember[2]);
+    const u = material.current?.uniforms;
+    if (!u) return;
+
+    u.uTime.value += delta;
+    u.uAspect.value = state.size.width / Math.max(state.size.height, 1);
+    u.uIntensity.value += (scene.intensity - u.uIntensity.value) * 0.05;
+    u.uVelocity.value += (scene.velocity - u.uVelocity.value) * 0.1;
+    u.uExpansion.value += (scene.expansion - u.uExpansion.value) * 0.08;
+    u.uMist.value.setRGB(scene.mist[0], scene.mist[1], scene.mist[2]);
+    u.uEmber.value.setRGB(scene.ember[0], scene.ember[1], scene.ember[2]);
   });
 
   return (
     <mesh renderOrder={-1} frustumCulled={false}>
       <planeGeometry args={[1, 1]} />
       <shaderMaterial
+        ref={material}
         vertexShader={vertex}
         fragmentShader={fragment}
-        uniforms={uniforms}
+        uniforms={initialUniforms}
         transparent
         depthTest={false}
         depthWrite={false}

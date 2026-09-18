@@ -38,6 +38,11 @@ export const scene = {
   mist: [0.18, 0.08, 0.04] as RGB,
 };
 
+if (process.env.NODE_ENV !== "production" && typeof window !== "undefined") {
+  // Exposed in development so the stage can be inspected from the console.
+  (window as unknown as { __scene: typeof scene }).__scene = scene;
+}
+
 export function setTheme(theme: Theme) {
   scene.emberTarget = [...theme.ember] as RGB;
   scene.mistTarget = [...theme.mist] as RGB;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { scene } from "@/lib/scene";
@@ -107,7 +107,10 @@ export default function EmberField() {
     return g;
   }, []);
 
-  const uniforms = useConst(() => ({
+  // Written through the material — see the note in PhotoStage.
+  const material = useRef<THREE.ShaderMaterial>(null);
+
+  const initialUniforms = useConst(() => ({
     uTime: { value: 0 },
     uHalf: { value: new THREE.Vector2(8, 5) },
     uVelocity: { value: 0 },
@@ -117,20 +120,24 @@ export default function EmberField() {
   }));
 
   useFrame((_, delta) => {
-    uniforms.uTime.value += delta;
-    uniforms.uHalf.value.set(viewport.width / 2, viewport.height / 2);
-    uniforms.uPixelRatio.value = Math.min(gl.getPixelRatio(), 2);
-    uniforms.uVelocity.value += (scene.velocity - uniforms.uVelocity.value) * 0.1;
-    uniforms.uIntensity.value += (scene.intensity - uniforms.uIntensity.value) * 0.04;
-    uniforms.uEmber.value.setRGB(scene.ember[0], scene.ember[1], scene.ember[2]);
+    const u = material.current?.uniforms;
+    if (!u) return;
+
+    u.uTime.value += delta;
+    u.uHalf.value.set(viewport.width / 2, viewport.height / 2);
+    u.uPixelRatio.value = Math.min(gl.getPixelRatio(), 2);
+    u.uVelocity.value += (scene.velocity - u.uVelocity.value) * 0.1;
+    u.uIntensity.value += (scene.intensity - u.uIntensity.value) * 0.04;
+    u.uEmber.value.setRGB(scene.ember[0], scene.ember[1], scene.ember[2]);
   });
 
   return (
     <points geometry={geometry} frustumCulled={false}>
       <shaderMaterial
+        ref={material}
         vertexShader={vertex}
         fragmentShader={fragment}
-        uniforms={uniforms}
+        uniforms={initialUniforms}
         transparent
         depthTest={false}
         depthWrite={false}

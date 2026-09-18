@@ -1,7 +1,7 @@
 "use client";
 
-import { Suspense, useSyncExternalStore } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Suspense, useEffect, useSyncExternalStore } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { tickScene } from "@/lib/scene";
 import PhotoStage from "./PhotoStage";
@@ -9,6 +9,14 @@ import MistPlane from "./MistPlane";
 import EmberField from "./EmberField";
 
 function SceneTicker() {
+  const three = useThree();
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production") {
+      (window as unknown as { __three: unknown }).__three = three;
+    }
+  }, [three]);
+
   useFrame((_, delta) => tickScene(Math.min(delta, 0.05)));
   return null;
 }

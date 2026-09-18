@@ -9,9 +9,6 @@ import { identity, prologue, chapters } from "@/data/content";
 
 const TITLE = identity.titleCard.split("");
 
-const setMatte = (v: number) =>
-  document.documentElement.style.setProperty("--letterbox", String(v));
-
 export default function Hero() {
   const root = useRef<HTMLDivElement>(null);
 
@@ -24,8 +21,8 @@ export default function Hero() {
       scene.exposure = 1;
       scene.reveal = 0;
       scene.intensity = 0.45;
+      scene.expansion = 0;
       setTheme(chapters[0].theme);
-      setMatte(1);
 
       // Entrance: the title is already on screen when the page is handed over,
       // so the landing state is the poster rather than an empty frame.
@@ -58,9 +55,8 @@ export default function Hero() {
 
       const unsubscribe = onStageReady(() => intro.play());
 
-      // Scroll: the matte retracts and the title grows into the open frame.
-      // Deliberately conspicuous — the frame opening is the point.
-      const matte = { value: 1 };
+      // Scroll: the matte retracts (see FilmOverlay, which reads
+      // scene.expansion) and the title grows into the open frame.
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: root.current,
@@ -82,12 +78,7 @@ export default function Hero() {
         },
       });
 
-      tl.to(
-        matte,
-        { value: 0, duration: 1.2, ease: "power2.inOut", onUpdate: () => setMatte(matte.value) },
-        0
-      )
-        .to("[data-title-block]", { scale: 1.22, duration: 2.2, ease: "power2.out" }, 0)
+      tl.to("[data-title-block]", { scale: 1.22, duration: 2.2, ease: "power2.out" }, 0)
         .to("[data-ratio-from]", { opacity: 0.25, duration: 0.4 }, 0.85)
         .fromTo(
           "[data-ratio-to]",
@@ -107,10 +98,7 @@ export default function Hero() {
           2.3
         );
 
-      return () => {
-        unsubscribe();
-        setMatte(0);
-      };
+      return unsubscribe;
     }, root);
 
     return () => ctx.revert();

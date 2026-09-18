@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { scene } from "@/lib/scene";
@@ -163,7 +163,14 @@ export default function PhotoStage() {
   // Mutable store rather than state: swapping a texture must not re-render.
   const store = useConst(() => ({ textures: [] as THREE.Texture[] }));
 
-  const uniforms = useConst(() => ({
+  /**
+   * Uniforms must be written through the material itself. react-three-fiber
+   * does not retain the object passed as the `uniforms` prop, so mutating that
+   * object updates nothing — the material keeps its own copy.
+   */
+  const material = useRef<THREE.ShaderMaterial>(null);
+
+  const initialUniforms = useConst(() => ({
     uTexA: { value: placeholder },
     uTexB: { value: placeholder },
     uSizeA: { value: new THREE.Vector2(1800, 1350) },
@@ -197,9 +204,14 @@ export default function PhotoStage() {
         // Colour management is deliberately bypassed: this is a 2D compositing
         // pass, so sampled values are treated as-is and written straight out.
         tex.colorSpace = THREE.NoColorSpace;
-        tex.minFilter = THREE.LinearMipmapLinearFilter;
+        // The plates are not power-of-two, and a NPOT texture with mipmapping
+        // is incomplete on WebGL1 — it samples as solid black. Plates are shown
+        // at close to full size anyway, so there is nothing to gain from mips.
+        tex.generateMipmaps = false;
+        tex.minFilter = THREE.LinearFilter;
         tex.magFilter = THREE.LinearFilter;
-        tex.generateMipmaps = true;
+        tex.wrapS = THREE.ClampToEdgeWrapping;
+        tex.wrapT = THREE.ClampToEdgeWrapping;
         tex.anisotropy = Math.min(maxAniso, 8);
         tex.needsUpdate = true;
         loaded[i] = tex;
@@ -215,36 +227,40 @@ export default function PhotoStage() {
   }, [gl, store]);
 
   useFrame((_, delta) => {
-    uniforms.uTime.value += delta;
-    uniforms.uResolution.value.set(size.width, size.height);
+    const u = material.current?.uniforms;
+    if (!u) return;
+
+    u.uTime.value += delta;
+    u.uResolution.value.set(size.width, size.height);
 
     const a = store.textures[scene.plateA] ?? placeholder;
     const b = store.textures[scene.plateB] ?? placeholder;
-    uniforms.uTexA.value = a;
-    uniforms.uTexB.value = b;
+    u.uTexA.value = a;
+    u.uTexB.value = b;
 
     const imgA = a.image as { width?: number; height?: number } | undefined;
     const imgB = b.image as { width?: number; height?: number } | undefined;
-    uniforms.uSizeA.value.set(imgA?.width || 1800, imgA?.height || 1350);
-    uniforms.uSizeB.value.set(imgB?.width || 1800, imgB?.height || 1350);
+    u.uSizeA.value.set(imgA?.width || 1800, imgA?.height || 1350);
+    u.uSizeB.value.set(imgB?.width || 1800, imgB?.height || 1350);
 
-    uniforms.uMix.value += (scene.plateMix - uniforms.uMix.value) * 0.14;
-    uniforms.uReveal.value += (scene.reveal - uniforms.uReveal.value) * 0.09;
-    uniforms.uVelocity.value += (scene.velocity - uniforms.uVelocity.value) * 0.1;
-    uniforms.uPush.value += (scene.push - uniforms.uPush.value) * 0.06;
-    uniforms.uParallax.value += (scene.parallax - uniforms.uParallax.value) * 0.07;
-    uniforms.uExposure.value += (scene.exposure - uniforms.uExposure.value) * 0.06;
-    uniforms.uAccent.value.setRGB(scene.ember[0], scene.ember[1], scene.ember[2]);
-    uniforms.uMist.value.setRGB(scene.mist[0], scene.mist[1], scene.mist[2]);
+    u.uMix.value += (scene.plateMix - u.uMix.value) * 0.14;
+    u.uReveal.value += (scene.reveal - u.uReveal.value) * 0.09;
+    u.uVelocity.value += (scene.velocity - u.uVelocity.value) * 0.1;
+    u.uPush.value += (scene.push - u.uPush.value) * 0.06;
+    u.uParallax.value += (scene.parallax - u.uParallax.value) * 0.07;
+    u.uExposure.value += (scene.exposure - u.uExposure.value) * 0.06;
+    u.uAccent.value.setRGB(scene.ember[0], scene.ember[1], scene.ember[2]);
+    u.uMist.value.setRGB(scene.mist[0], scene.mist[1], scene.mist[2]);
   });
 
   return (
     <mesh renderOrder={-2} frustumCulled={false}>
       <planeGeometry args={[1, 1]} />
       <shaderMaterial
+        ref={material}
         vertexShader={vertex}
         fragmentShader={fragment}
-        uniforms={uniforms}
+        uniforms={initialUniforms}
         depthTest={false}
         depthWrite={false}
       />

@@ -25,6 +25,10 @@ export default function SmoothScroll() {
 
     lenisRef.current = lenis;
 
+    if (process.env.NODE_ENV !== "production") {
+      (window as unknown as { __lenis: Lenis }).__lenis = lenis;
+    }
+
     lenis.on("scroll", (e: { velocity: number; progress: number }) => {
       scene.progress = e.progress;
       // Normalise against a fast-but-plausible flick so the GPU sees 0..1.
