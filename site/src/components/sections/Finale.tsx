@@ -88,6 +88,11 @@ export default function Finale() {
           aria-hidden
           className="absolute inset-0 bg-gradient-to-b from-ink/75 via-ink/30 to-ink/90"
         />
+        {/* The closing type all sits on the left, so weight the shadow there. */}
+        <div
+          aria-hidden
+          className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-ink via-ink/70 to-transparent sm:w-[72%]"
+        />
 
         <div className="hud relative flex items-center justify-between">
           <span>Epilogue</span>

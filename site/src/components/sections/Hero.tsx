@@ -75,6 +75,17 @@ export default function Hero() {
             scene.reveal =
               p > 0.46 && p < 0.78 ? Math.sin(((p - 0.46) / 0.32) * Math.PI) * 0.6 : 0;
           },
+          // Leave the frame fully open rather than stranded mid-retraction.
+          onLeave: () => {
+            scene.expansion = 1;
+            scene.push = 1;
+            scene.reveal = 0;
+          },
+          onLeaveBack: () => {
+            scene.expansion = 0;
+            scene.push = 0;
+            scene.reveal = 0;
+          },
         },
       });
 
@@ -107,7 +118,22 @@ export default function Hero() {
   return (
     <section ref={root} className="relative h-[320vh]">
       <div className="sticky top-0 flex h-screen flex-col justify-between overflow-hidden px-6 py-[13vh] sm:px-10">
-        <div className="hud flex items-center justify-between">
+        {/* The opening plate is the brightest in the reel, so the title needs
+            its own pool of shadow to sit in. */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-b from-ink/70 via-transparent to-ink/75"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 45% at 50% 50%, rgba(4,4,4,0.62) 0%, rgba(4,4,4,0.28) 48%, transparent 72%)",
+          }}
+        />
+
+        <div className="hud relative flex items-center justify-between">
           <span data-hero-meta>Prologue</span>
           <span className="flex items-center gap-3">
             <span data-ratio-from data-hero-meta>
@@ -121,7 +147,7 @@ export default function Hero() {
 
         <div
           data-hero-inner
-          className="relative flex flex-1 flex-col items-center justify-center text-center"
+          className="relative z-10 flex flex-1 flex-col items-center justify-center text-center"
         >
           <div data-title-block className="flex flex-col items-center gap-5">
             <span data-hero-sub className="hud text-[0.55rem] sm:text-[0.65rem]">
@@ -149,7 +175,7 @@ export default function Hero() {
           </p>
         </div>
 
-        <div className="hud flex items-center justify-between">
+        <div className="hud relative flex items-center justify-between">
           <span data-hero-meta className="flex items-center gap-2">
             <span className="inline-block h-1 w-1 animate-pulse rounded-full bg-[var(--accent)]" />
             Scroll

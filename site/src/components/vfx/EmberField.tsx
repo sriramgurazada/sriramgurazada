@@ -70,7 +70,7 @@ const fragment = /* glsl */ `
   void main() {
     float d = length(gl_PointCoord - vec2(0.5));
     float core = smoothstep(0.5, 0.0, d);
-    float alpha = pow(core, 2.4) * vAlpha * uIntensity;
+    float alpha = pow(core, 2.4) * vAlpha * uIntensity * 0.62;
     if (alpha < 0.005) discard;
 
     // Hot centre, cooler edge.
@@ -97,8 +97,9 @@ export default function EmberField() {
 
       seeds[i * 3 + 0] = 0.15 + rand() * 0.75;
       seeds[i * 3 + 1] = 0.4 + rand() * 1.6;
-      // A few large embers read as close to camera; most stay as fine sparks.
-      seeds[i * 3 + 2] = rand() < 0.08 ? 3.2 + rand() * 3.5 : 0.7 + rand() * 1.8;
+      // A few larger embers read as close to camera, but they stay rare: too
+      // many and the field reads as falling snow rather than sparks.
+      seeds[i * 3 + 2] = rand() < 0.04 ? 2.2 + rand() * 2.0 : 0.5 + rand() * 1.2;
     }
 
     const g = new THREE.BufferGeometry();

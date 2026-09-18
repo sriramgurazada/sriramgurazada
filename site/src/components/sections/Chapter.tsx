@@ -66,9 +66,21 @@ export default function Chapter({ chapter, index }: Props) {
             // The schematic pass peaks while the pattern caption is on screen,
             // then settles back to a readable photograph under the work list.
             scene.reveal =
-              p < 0.18 ? 0 : p < 0.52 ? Math.sin(((p - 0.18) / 0.34) * Math.PI) * 0.92 : 0.12;
+              p < 0.18 ? 0 : p < 0.52 ? Math.sin(((p - 0.18) / 0.34) * Math.PI) * 0.85 : 0.08;
             // Dim the plate once the text panel takes over the frame.
-            scene.exposure = p > 0.5 ? 0.62 : 1;
+            scene.exposure = p > 0.5 ? 0.55 : 1;
+          },
+          // Settle on the end state when the guard above stops firing, so a
+          // value cannot be stranded mid-curve at a section boundary.
+          onLeave: () => {
+            scene.reveal = 0.08;
+            scene.exposure = 0.55;
+            scene.push = 1;
+          },
+          onLeaveBack: () => {
+            scene.reveal = 0;
+            scene.exposure = 1;
+            scene.push = 0;
           },
         },
       });
@@ -126,9 +138,16 @@ export default function Chapter({ chapter, index }: Props) {
           },
         })
         .fromTo(
+          "[data-work-scrim]",
+          { opacity: 0 },
+          { opacity: 1, duration: 1, ease: "power2.out" },
+          0
+        )
+        .fromTo(
           "[data-work-panel]",
           { opacity: 0, x: 60 },
-          { opacity: 1, x: 0, duration: 1, ease: "power3.out" }
+          { opacity: 1, x: 0, duration: 1, ease: "power3.out" },
+          0
         )
         .fromTo(
           "[data-work]",
@@ -150,10 +169,17 @@ export default function Chapter({ chapter, index }: Props) {
   return (
     <section ref={root} id={chapter.id} className="relative h-[460vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Scrim: keeps type legible without flattening the photograph. */}
+        {/* Scrims: keep type legible without flattening the photograph. The
+            second one only arrives with the work panel, which sits over the
+            busiest part of the schematic. */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-b from-ink/70 via-transparent to-ink/80"
+          className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/30 to-ink/85"
+        />
+        <div
+          data-work-scrim
+          aria-hidden
+          className="absolute inset-y-0 right-0 w-full bg-gradient-to-l from-ink via-ink/85 to-transparent opacity-0 sm:w-[68%]"
         />
 
         <div className="relative flex h-full flex-col justify-between px-6 py-[13vh] sm:px-10">
