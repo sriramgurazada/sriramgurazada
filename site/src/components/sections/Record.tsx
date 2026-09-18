@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import { scene } from "@/lib/scene";
+import { asset } from "@/lib/asset";
 import { aboutCopy, capabilities, identity, portraits, record } from "@/data/content";
 
 export default function Record() {
@@ -72,7 +73,7 @@ export default function Record() {
           <div data-record-reveal className="lg:col-span-5">
             <div className="relative aspect-[3/4] overflow-hidden rounded-sm border border-white/10">
               <Image
-                src={portraits.headshot}
+                src={asset(portraits.headshot)}
                 alt={identity.shortName}
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
@@ -141,7 +142,7 @@ export default function Record() {
                 {entry.photo && (
                   <div className="relative ml-auto h-16 w-16 overflow-hidden rounded-sm border border-white/10 grayscale transition-all duration-700 hover:grayscale-0">
                     <Image
-                      src={entry.photo}
+                      src={asset(entry.photo)}
                       alt={entry.place}
                       fill
                       sizes="64px"
