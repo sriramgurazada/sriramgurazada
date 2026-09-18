@@ -28,7 +28,9 @@ export default function FieldNotes() {
           start: "top 80%",
           end: "bottom top",
           scrub: true,
-          onUpdate: () => {
+          // Only while genuinely on screen — see the note in Chapter.tsx.
+          onUpdate: (self) => {
+            if (!self.isActive) return;
             scene.exposure = 0.24;
             scene.reveal = 0;
             scene.intensity = 0.18;

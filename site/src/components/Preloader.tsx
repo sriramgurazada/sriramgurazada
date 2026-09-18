@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useProgress } from "@react-three/drei";
 import { gsap } from "@/lib/gsap";
 import { lockScroll, unlockScroll } from "@/lib/lenis";
+import { markStageReady } from "@/lib/boot";
 import { identity } from "@/data/content";
 
 const MIN_DURATION = 1800; // Let the count actually read as a count.
@@ -67,12 +68,7 @@ export default function Preloader() {
       ease: "power2.in",
     })
       .to(el, { opacity: 0, duration: 0.8, ease: "power2.inOut" }, "-=0.2")
-      .fromTo(
-        "[data-stage]",
-        { opacity: 0, scale: 1.08 },
-        { opacity: 1, scale: 1, duration: 1.6, ease: "power2.out" },
-        "-=0.6"
-      );
+      .add(markStageReady, "-=0.5");
     return () => {
       tl.kill();
     };

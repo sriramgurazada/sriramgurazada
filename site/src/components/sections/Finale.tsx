@@ -25,12 +25,19 @@ export default function Finale() {
           end: "top 10%",
           scrub: true,
           onUpdate: (self) => {
+            if (!self.isActive) return;
             scene.plateA = FINALE_PLATE - 1;
             scene.plateB = FINALE_PLATE;
             scene.plateMix = self.progress;
             scene.exposure = 0.2 + self.progress * 0.75;
             scene.intensity = 0.2 + self.progress * 0.6;
             scene.reveal = Math.sin(self.progress * Math.PI) * 0.45;
+          },
+          onLeave: () => {
+            scene.plateA = FINALE_PLATE - 1;
+            scene.plateB = FINALE_PLATE;
+            scene.plateMix = 1;
+            scene.exposure = 0.95;
           },
         },
       });
@@ -42,6 +49,7 @@ export default function Finale() {
           end: "bottom bottom",
           scrub: true,
           onUpdate: (self) => {
+            if (!self.isActive) return;
             scene.push = self.progress;
             scene.parallax = (self.progress - 0.5) * 1.1;
           },

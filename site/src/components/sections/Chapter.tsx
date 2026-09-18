@@ -24,13 +24,28 @@ export default function Chapter({ chapter, index }: Props) {
           start: "top 90%",
           end: "top 20%",
           scrub: true,
+          // Guarded on isActive: ScrollTrigger also fires onUpdate during
+          // refresh, and an off-screen section must not redress the stage.
           onUpdate: (self) => {
+            if (!self.isActive) return;
             scene.plateA = plate - 1;
             scene.plateB = plate;
             scene.plateMix = self.progress;
           },
           onEnter: () => setTheme(chapter.theme),
           onEnterBack: () => setTheme(chapter.theme),
+          // Pin the dissolve to a definite end state on the way past, so a fast
+          // scroll cannot strand it part-way through.
+          onLeave: () => {
+            scene.plateA = plate - 1;
+            scene.plateB = plate;
+            scene.plateMix = 1;
+          },
+          onLeaveBack: () => {
+            scene.plateA = plate - 1;
+            scene.plateB = plate;
+            scene.plateMix = 0;
+          },
         },
       });
 
@@ -42,6 +57,7 @@ export default function Chapter({ chapter, index }: Props) {
           end: "bottom bottom",
           scrub: true,
           onUpdate: (self) => {
+            if (!self.isActive) return;
             const p = self.progress;
             scene.chapterIndex = index;
             scene.push = p;

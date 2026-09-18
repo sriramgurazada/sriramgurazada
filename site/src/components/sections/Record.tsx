@@ -17,7 +17,8 @@ export default function Record() {
           start: "top 80%",
           end: "bottom top",
           scrub: true,
-          onUpdate: () => {
+          onUpdate: (self) => {
+            if (!self.isActive) return;
             scene.exposure = 0.2;
             scene.reveal = 0;
             scene.intensity = 0.22;
