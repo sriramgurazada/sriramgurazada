@@ -11,6 +11,10 @@ type Props = {
   index: number;
 };
 
+/** Soft top and bottom edges for a work list long enough to scroll. */
+const EDGE_FADE =
+  "linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%)";
+
 /**
  * Splits a leading article off a chapter title so the card can set it above
  * the noun. Titles without one fall back to a single line.
@@ -70,6 +74,8 @@ export default function Chapter({ chapter, index }: Props) {
   const root = useRef<HTMLElement>(null);
   const frame = useRef<HTMLDivElement>(null);
   const flow = useRef<HTMLDivElement>(null);
+  const window_ = useRef<HTMLDivElement>(null);
+  const track = useRef<HTMLDivElement>(null);
   const plate = chapterPlate(index);
   // "The Gate" is set as a small "The" over a large "Gate".
   const [article, noun] = splitTitle(chapter.title);
@@ -205,7 +211,33 @@ export default function Chapter({ chapter, index }: Props) {
 
           if (isWide) {
             // Beat three — the work, arriving over the second half of the
-            // pinned run.
+            // pinned run and then travelling through it. The panel is a
+            // fixed window; the track behind it is as tall as the list needs
+            // to be, and scrubs upward so nothing is ever cut off. The
+            // distance is a function value so a resize recomputes it.
+            const overflow = () => {
+              const t = track.current;
+              const w = window_.current;
+              return t && w ? t.scrollHeight - w.clientHeight : 0;
+            };
+
+            const travel = () => {
+              const over = overflow();
+              // A few pixels past the end so the final entry clears the edge
+              // rather than sitting flush against it.
+              return over > 1 ? -(over + 14) : 0;
+            };
+
+            // Only a list long enough to travel gets soft edges, so that an
+            // entry leaving the window dissolves instead of being sliced
+            // through the middle of its letterforms. A list that already fits
+            // would just have its first and last lines faded for no reason.
+            const win = window_.current;
+            if (win && overflow() > 1) {
+              win.style.maskImage = EDGE_FADE;
+              win.style.webkitMaskImage = EDGE_FADE;
+            }
+
             gsap
               .timeline({
                 scrollTrigger: {
@@ -213,6 +245,7 @@ export default function Chapter({ chapter, index }: Props) {
                   start: "50% top",
                   end: "bottom bottom",
                   scrub: 1,
+                  invalidateOnRefresh: true,
                 },
               })
               .fromTo("[data-work-scrim]", { opacity: 0 }, { opacity: 1, duration: 1 }, 0)
@@ -225,15 +258,29 @@ export default function Chapter({ chapter, index }: Props) {
               .fromTo(
                 "[data-work-panel] [data-work]",
                 { opacity: 0, y: 40 },
-                { opacity: 1, y: 0, duration: 0.9, stagger: 0.35, ease: "power2.out" },
-                "-=0.6"
+                { opacity: 1, y: 0, duration: 0.8, stagger: 0.18, ease: "power2.out" },
+                0.4
               )
               .fromTo(
                 "[data-credit-row] [data-credit]",
                 { opacity: 0, y: 16 },
                 { opacity: 1, y: 0, duration: 0.6, stagger: 0.12 },
-                "-=0.4"
-              );
+                1.2
+              )
+              .fromTo(
+                "[data-work-track]",
+                { y: 0 },
+                { y: travel, ease: "none", duration: 3.2 },
+                2.2
+              )
+              // A beat of stillness on the last entry before the pin releases.
+              .to({}, { duration: 0.7 });
+
+            return () => {
+              if (!win) return;
+              win.style.maskImage = "";
+              win.style.webkitMaskImage = "";
+            };
           } else {
             // Narrow screens read the work as a scrolling list, so each entry
             // gets its own trigger instead of one shared stagger.
@@ -296,7 +343,7 @@ export default function Chapter({ chapter, index }: Props) {
           <div
             data-work-scrim
             aria-hidden
-            className="absolute inset-y-0 right-0 hidden w-[68%] bg-gradient-to-l from-ink via-ink/85 to-transparent opacity-0 sm:block"
+            className="absolute inset-y-0 right-0 hidden w-[72%] bg-gradient-to-l from-ink via-ink/90 to-transparent opacity-0 sm:block"
           />
 
           <div className="relative flex h-full flex-col justify-between px-6 py-[13vh] sm:px-10">
@@ -364,12 +411,18 @@ export default function Chapter({ chapter, index }: Props) {
                 </p>
               </div>
 
-              {/* Beat three, wide screens only */}
-              <div data-work-panel className="ml-auto hidden w-[55%] max-w-xl opacity-0 sm:block">
-                <div className="max-h-[62vh] space-y-7 overflow-hidden">
-                  {chapter.works.map((work) => (
-                    <WorkEntry key={work.title} work={work} />
-                  ))}
+              {/* Beat three, wide screens only. The right margin keeps the
+                  panel clear of the chapter rail pinned to the window edge. */}
+              <div
+                data-work-panel
+                className="ml-auto hidden w-[55%] max-w-xl opacity-0 sm:mr-24 sm:block lg:mr-28"
+              >
+                <div ref={window_} className="max-h-[62vh] overflow-hidden">
+                  <div ref={track} data-work-track className="space-y-7">
+                    {chapter.works.map((work) => (
+                      <WorkEntry key={work.title} work={work} />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
