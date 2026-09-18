@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #040404;
+  --color-ink-soft: #0b0a09;
+  --color-ash: #8b8377;
+  --color-bone: #ece5da;
+  --color-ember: #ff5f1f;
+  --color-gold: #d4a23c;
+  --color-blood: #8f1d14;
+
+  --font-display: var(--font-cinzel), serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-mono-hud), ui-monospace, monospace;
+}
+
+:root {
+  /* Updated per-chapter by ScrollTrigger so DOM accents track the WebGL grade. */
+  --accent: #ff5f1f;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Lenis drives scrolling; native smooth behaviour fights it. */
+  scroll-behavior: auto;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: none;
+}
+
+body {
+  /* Prevents a horizontal scrollbar from wide title-card typography. */
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--accent);
+  color: #040404;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Hide the scrollbar without losing scrollability — the HUD reports position instead. */
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+body {
+  scrollbar-width: none;
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* ---------- Cinematic primitives ----------
+   These live in the components layer so per-element Tailwind utilities
+   (text sizes, colours, tracking) still win where a element needs to
+   depart from the house style. */
+
+@layer components {
+  /* Wide, sparse, engraved-looking title type. */
+  .title-epic {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  /* Small technical stamps, mirroring on-screen production titles. The wide
+     tracking is what sells them, but at phone widths it is also what pushes
+     a two-item header row into a collision, so it eases off below sm. */
+  .hud {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ash);
+  }
+
+  @media (min-width: 640px) {
+    .hud {
+      font-size: 0.6875rem;
+      letter-spacing: 0.32em;
+    }
+  }
+
+  /* Brushed-metal fill used on the main title card. */
+  .metal {
+    background: linear-gradient(
+      180deg,
+      #fffaf2 0%,
+      #efe2cb 20%,
+      #b9995f 42%,
+      #7d6338 58%,
+      #d8c49a 74%,
+      #f6efe2 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  opacity: 0.11;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 0.6s steps(3) infinite;
+  will-change: transform;
+}
+
+@keyframes grain-shift {
+  0% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(-2%, 1.5%);
+  }
+  66% {
+    transform: translate(1.5%, -1%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.vignette {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 38%,
+    rgba(0, 0, 0, 0.45) 78%,
+    rgba(0, 0, 0, 0.88) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+}
