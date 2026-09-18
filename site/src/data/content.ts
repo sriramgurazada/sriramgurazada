@@ -344,6 +344,16 @@ export const heroPlate = "/photos/balloon-flame.jpg";
 export const finalePlate = "/photos/chicago-river.jpg";
 
 /**
+ * The closing plate is a warm city at night, so the epilogue takes back the
+ * opening ember rather than inheriting the cold accent of the last chapter.
+ */
+export const finaleTheme: Theme = {
+  ember: [1.0, 0.68, 0.32],
+  mist: [0.14, 0.1, 0.06],
+  accent: "#f0a850",
+};
+
+/**
  * The editorial interlude. Same idea as the chapters — a real photograph and
  * the pattern hiding inside it — but presented as paired notes rather than
  * full-bleed cinema.

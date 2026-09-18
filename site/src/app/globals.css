@@ -79,40 +79,54 @@ body {
   text-wrap: balance;
 }
 
-/* ---------- Cinematic primitives ---------- */
+/* ---------- Cinematic primitives ----------
+   These live in the components layer so per-element Tailwind utilities
+   (text sizes, colours, tracking) still win where a element needs to
+   depart from the house style. */
 
-/* Wide, sparse, engraved-looking title type. */
-.title-epic {
-  font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 0.85;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
+@layer components {
+  /* Wide, sparse, engraved-looking title type. */
+  .title-epic {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
 
-/* Small technical stamps, mirroring on-screen production titles. */
-.hud {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--color-ash);
-}
+  /* Small technical stamps, mirroring on-screen production titles. The wide
+     tracking is what sells them, but at phone widths it is also what pushes
+     a two-item header row into a collision, so it eases off below sm. */
+  .hud {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ash);
+  }
 
-/* Brushed-metal fill used on the main title card. */
-.metal {
-  background: linear-gradient(
-    180deg,
-    #fffaf2 0%,
-    #efe2cb 20%,
-    #b9995f 42%,
-    #7d6338 58%,
-    #d8c49a 74%,
-    #f6efe2 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  @media (min-width: 640px) {
+    .hud {
+      font-size: 0.6875rem;
+      letter-spacing: 0.32em;
+    }
+  }
+
+  /* Brushed-metal fill used on the main title card. */
+  .metal {
+    background: linear-gradient(
+      180deg,
+      #fffaf2 0%,
+      #efe2cb 20%,
+      #b9995f 42%,
+      #7d6338 58%,
+      #d8c49a 74%,
+      #f6efe2 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 .grain {

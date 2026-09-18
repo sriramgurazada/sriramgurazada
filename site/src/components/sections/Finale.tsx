@@ -2,9 +2,9 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
-import { scene } from "@/lib/scene";
+import { scene, setTheme } from "@/lib/scene";
 import { FINALE_PLATE } from "@/lib/plates";
-import { identity } from "@/data/content";
+import { chapters, finaleTheme, identity } from "@/data/content";
 
 const LINKS = [
   { label: "Email", value: identity.email, href: `mailto:${identity.email}` },
@@ -33,6 +33,10 @@ export default function Finale() {
             scene.intensity = 0.2 + self.progress * 0.6;
             scene.reveal = Math.sin(self.progress * Math.PI) * 0.45;
           },
+          onEnter: () => setTheme(finaleTheme),
+          onEnterBack: () => setTheme(finaleTheme),
+          // Hand the grade back to the last chapter on the way up.
+          onLeaveBack: () => setTheme(chapters[chapters.length - 1].theme),
           onLeave: () => {
             scene.plateA = FINALE_PLATE - 1;
             scene.plateB = FINALE_PLATE;
@@ -111,7 +115,7 @@ export default function Finale() {
             <span className="text-[var(--accent)]">permanent.</span>
           </h2>
 
-          <div className="mt-14 flex flex-wrap gap-x-14 gap-y-7">
+          <div className="mt-14 flex flex-wrap gap-x-8 gap-y-7 sm:gap-x-14">
             {LINKS.map((link) => (
               <a
                 key={link.label}
@@ -133,8 +137,11 @@ export default function Finale() {
           </div>
         </div>
 
-        <div className="hud relative flex flex-wrap items-center justify-between gap-2">
-          <span>{identity.name}</span>
+        <div className="hud relative flex flex-wrap items-center justify-between gap-x-6 gap-y-1">
+          {/* The full name is too wide for a phone footer; the short form
+              carries the same signature. */}
+          <span className="sm:hidden">{identity.shortName}</span>
+          <span className="hidden sm:inline">{identity.name}</span>
           <span>Photographs by the author</span>
         </div>
       </div>

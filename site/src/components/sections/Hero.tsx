@@ -133,14 +133,18 @@ export default function Hero() {
           }}
         />
 
-        <div className="hud relative flex items-center justify-between">
+        <div className="hud relative flex items-center justify-between gap-4">
           <span data-hero-meta>Prologue</span>
-          <span className="flex items-center gap-3">
+          <span className="flex items-center gap-2 sm:gap-3">
             <span data-ratio-from data-hero-meta>
               2.39 : 1
             </span>
-            <span data-ratio-to className="text-[var(--accent)]" style={{ opacity: 0 }}>
-              1.43 : 1 · Full Frame
+            <span
+              data-ratio-to
+              className="whitespace-nowrap text-[var(--accent)]"
+              style={{ opacity: 0 }}
+            >
+              1.43 : 1<span className="hidden sm:inline"> · Full Frame</span>
             </span>
           </span>
         </div>
@@ -154,7 +158,10 @@ export default function Hero() {
               Devi Venkata Sai Sriram Chandra
             </span>
 
-            <h1 className="title-epic flex overflow-hidden text-[19vw] leading-[0.82] sm:text-[15vw]">
+            {/* Sized in vw so the card always fills the frame edge to edge.
+                The steps down are where a single unbreakable line of Cinzel
+                would otherwise run past the gutters. */}
+            <h1 className="title-epic flex overflow-hidden text-[13vw] leading-[0.82] sm:text-[13.5vw] xl:text-[15vw]">
               {TITLE.map((char, i) => (
                 <span key={`${char}-${i}`} data-title-char className="metal inline-block">
                   {char}
