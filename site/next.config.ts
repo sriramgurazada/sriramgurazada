@@ -15,6 +15,14 @@ const nextConfig: NextConfig = {
   // handlers. Exporting it means Pages can host it directly.
   output: "export",
   basePath,
+  /**
+   * Without this, a route exports as `work.html`, which GitHub Pages serves at
+   * `/work` but not at `/work/` — so every trailing-slash URL 404s, including
+   * anything a visitor types, shares or gets from a redirect. Emitting
+   * `work/index.html` instead makes both spellings work, because Pages resolves
+   * a directory to its index and redirects the bare path to it.
+   */
+  trailingSlash: true,
   images: {
     // The photographs are pre-sized by scripts/process-photos.mjs. Next's
     // optimizer needs a server, which a static export does not have.

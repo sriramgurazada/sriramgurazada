@@ -100,7 +100,6 @@ export default function PhotoViewer({ slugs, index, onClose, onIndex }: Props) {
       <div className="shell flex items-center justify-between gap-4 py-4">
         <p className="label">
           {index + 1} / {slugs.length}
-          {record.kind === "composite" && <span className="ml-3 text-route">Composite study</span>}
         </p>
         <button
           ref={closeButton}

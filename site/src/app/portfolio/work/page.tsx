@@ -27,7 +27,7 @@ export default function WorkIndex() {
           {projects.map((project, index) => (
             <li key={project.slug} className="group border-b border-white/10">
               <Link
-                href={`/work/${project.slug}`}
+                href={`/portfolio/work/${project.slug}`}
                 className="grid gap-3 py-8 lg:grid-cols-12 lg:items-baseline lg:gap-8"
               >
                 <span className="label text-ivory lg:col-span-1">

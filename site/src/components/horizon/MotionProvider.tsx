@@ -8,7 +8,14 @@ import {
   useMemo,
   useSyncExternalStore,
 } from "react";
-import { MODE_KEY, MOTION_KEY, PAUSED_KEY, type Mode, type MotionPreference } from "@/lib/prefs";
+import {
+  MODE_KEY,
+  MOTION_KEY,
+  PAUSED_KEY,
+  RESTORED_KEY,
+  type Mode,
+  type MotionPreference,
+} from "@/lib/prefs";
 
 type MotionState = {
   motion: MotionPreference;
@@ -142,20 +149,20 @@ export function useMotion() {
 }
 
 /**
- * Records which experience the visitor chose, so the home page can restore it
- * on a later visit.
+ * Records which experience the visitor chose, so the landing page can restore
+ * it on a later visit.
  *
- * Choosing raw also arms the one-shot guard for the rest of this session. That
- * is what keeps the Back button honest: without it, navigating to raw mode and
- * pressing Back would land on the home page, find a raw preference, and bounce
- * straight into raw mode again. The preference is for the next visit, not for
- * overriding a navigation the visitor just made.
+ * Choosing the reel also arms the one-shot guard for the rest of this session.
+ * That is what keeps the Back button honest: without it, leaving the portfolio
+ * for the landing page and then pressing Back would find a portfolio preference
+ * and bounce straight forward again. The preference is for the next visit, not
+ * for overriding a navigation the visitor just made.
  */
 export function rememberMode(mode: Mode) {
   write(MODE_KEY, mode);
   try {
-    if (mode === "raw") sessionStorage.setItem("horizon.restored", "1");
-    else sessionStorage.removeItem("horizon.restored");
+    if (mode === "reel") sessionStorage.setItem(RESTORED_KEY, "1");
+    else sessionStorage.removeItem(RESTORED_KEY);
   } catch {
     // Storage is unavailable, so there is no preference to restore anyway.
   }

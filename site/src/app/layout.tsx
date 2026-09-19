@@ -36,7 +36,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    // The boot script below writes data-motion, data-paused and data-hidden onto
+    // this element before React hydrates, which React would otherwise report as
+    // attributes the server did not render. Suppression applies to this element
+    // only, not to its children, so nothing real is being hidden: the whole
+    // point of resolving those preferences in a script is that the client knows
+    // something the server could not.
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
         {/* Resolves the motion preferences before the first paint. A reduced
             preference honoured after hydration was not honoured. */}

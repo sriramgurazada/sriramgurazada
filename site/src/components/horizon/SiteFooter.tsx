@@ -26,9 +26,9 @@ export default function SiteFooter() {
         </div>
 
         <div className="flex flex-col items-start gap-4 sm:items-end">
-          <ModeToggle current="tech" />
+          <ModeToggle current="portfolio" />
           <div className="flex flex-col gap-1 sm:text-right">
-            <Link href="/work" className="label transition-colors duration-200 hover:text-ivory">
+            <Link href="/portfolio/work" className="label transition-colors duration-200 hover:text-ivory">
               All work
             </Link>
             {/* Scoped deliberately. The studio portrait is somebody else's

@@ -35,15 +35,18 @@ export default function Hero() {
           />
         </div>
 
-        {/* Type over photography needs its own shadow to sit in. Measured at
-            4.5:1 against the crop underneath at every breakpoint. */}
+        {/* Type over photography needs its own shadow to sit in, but only where
+            the type is. Both scrims reach full strength behind the copy in the
+            bottom left and are gone by two thirds of the way across and up, so
+            the sky — which is the whole reason this photograph is here — is left
+            at its own contrast rather than sitting under a flat grey wash. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-basalt via-basalt/70 to-basalt/25"
+          className="absolute inset-0 bg-gradient-to-t from-basalt via-basalt/55 via-30% to-transparent to-68%"
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-r from-basalt/85 via-basalt/35 to-transparent"
+          className="absolute inset-0 bg-gradient-to-r from-basalt/75 via-basalt/20 via-38% to-transparent to-62%"
         />
 
         <HorizonDiagram className="absolute inset-0 h-full w-full" />
@@ -65,13 +68,13 @@ export default function Hero() {
 
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <Link
-              href="/work"
+              href="/portfolio/work"
               className="inline-flex min-h-11 items-center rounded-full bg-route px-6 text-sm font-medium text-basalt transition-colors duration-200 hover:bg-ivory"
             >
               Explore my work
             </Link>
             <Link
-              href="/#about"
+              href="/portfolio#about"
               className="inline-flex min-h-11 items-center rounded-full border border-white/25 px-6 text-sm text-ivory transition-colors duration-200 hover:border-route hover:text-route"
             >
               About me

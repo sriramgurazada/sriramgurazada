@@ -7,10 +7,10 @@ import ModeToggle from "@/components/horizon/ModeToggle";
 import { identity } from "@/data/identity";
 
 const NAV = [
-  { label: "Work", href: "/work" },
-  { label: "Field notes", href: "/#field-notes" },
-  { label: "About", href: "/#about" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Work", href: "/portfolio/work" },
+  { label: "Field notes", href: "/portfolio#field-notes" },
+  { label: "About", href: "/portfolio#about" },
+  { label: "Contact", href: "/portfolio#contact" },
 ];
 
 /**
@@ -69,7 +69,7 @@ export default function SiteHeader() {
 
       <div className="shell relative flex items-center justify-between gap-4 py-4 sm:py-5">
         <Link
-          href="/"
+          href="/portfolio"
           className="text-[0.9375rem] font-medium tracking-tight text-ivory transition-colors duration-200 hover:text-route"
         >
           {identity.shortName}
@@ -89,7 +89,7 @@ export default function SiteHeader() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <MotionControls />
-          <ModeToggle current="tech" />
+          <ModeToggle current="portfolio" />
         </div>
 
         <button
@@ -124,7 +124,7 @@ export default function SiteHeader() {
           </nav>
           <div className="shell flex flex-wrap items-center gap-3 pb-5">
             <MotionControls />
-            <ModeToggle current="tech" />
+            <ModeToggle current="portfolio" />
           </div>
         </div>
       )}

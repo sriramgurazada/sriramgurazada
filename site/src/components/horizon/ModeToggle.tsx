@@ -6,16 +6,16 @@ import { rememberMode } from "@/components/horizon/MotionProvider";
 /**
  * Switches between the two experiences.
  *
- * The URL is the state — `/` is the readable site, `/raw` is the cinematic one
- * — so this is a pair of links rather than a stateful widget, and it keeps
- * working with no JavaScript at all. The click handler only records the choice,
- * so that a visitor who prefers raw mode lands there next time.
+ * The URL is the state — `/` is the reel, `/portfolio` is the readable site —
+ * so this is a pair of links rather than a stateful widget, and it keeps working
+ * with no JavaScript at all. The click handler only records the choice, so that
+ * a visitor who prefers one of them lands there next time.
  */
 export default function ModeToggle({
   current,
   className = "",
 }: {
-  current: "tech" | "raw";
+  current: "reel" | "portfolio";
   className?: string;
 }) {
   return (
@@ -26,8 +26,8 @@ export default function ModeToggle({
       aria-label="Site mode"
       role="group"
     >
-      <Item href="/" label="Normal" mode="tech" active={current === "tech"} />
-      <Item href="/raw" label="Raw" mode="raw" active={current === "raw"} />
+      <Item href="/portfolio" label="Portfolio" mode="portfolio" active={current === "portfolio"} />
+      <Item href="/" label="Reel" mode="reel" active={current === "reel"} />
     </div>
   );
 }
@@ -40,7 +40,7 @@ function Item({
 }: {
   href: string;
   label: string;
-  mode: "tech" | "raw";
+  mode: "reel" | "portfolio";
   active: boolean;
 }) {
   if (active) {
