@@ -1,7 +1,7 @@
 import { contact, contactLinks, contactSection, identity } from "@/data/identity";
 
 /**
- * Chapter 06. The banner.
+ * Chapter 07. The banner.
  *
  * Only real destinations appear. There is no public résumé URL yet, so there is
  * no résumé button — a control that goes nowhere is worse than a control that is

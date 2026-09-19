@@ -2,17 +2,15 @@
 
 Two experiences over one set of content, and a switch between them.
 
-**The default** is a readable, typographic site: a hero photograph that resolves
-into the line drawing hiding inside it, three selected cases, a path, a wall of
-photographs and a contact banner. It is meant for somebody who arrived to find
-out what I have built and would like to find that out.
+**The landing page** is the cinematic reel. A single WebGL canvas sits behind
+the whole page and re-grades each photograph into a contour schematic as you
+scroll. It is a poor front door for someone who arrived to read, which is why
+the header of that page is one action: take me to the portfolio.
 
-**The reel**, at `/raw`, is the cinematic version. A single WebGL canvas sits
-behind the whole page and re-grades each photograph into a contour schematic as
-you scroll, wiping between the two treatments along a burning seam. It makes the
-argument the site is about — bridge cables and mountain contours are the same
-curve solved twice — and it is a poor front door, which is why it is no longer
-the front door.
+**The portfolio**, at `/portfolio`, is the readable site. The opening frame is
+an illustration built to the approved design — not a photograph — then three
+selected cases, the six stages a question actually passes through, a wall of
+photographs, and a contact banner.
 
 The switch lives in the header and the footer. The choice is remembered like a
 theme, and restored only on a later visit.
@@ -32,16 +30,24 @@ npm run lint       # eslint
 npx tsc --noEmit   # types
 ```
 
+To preview the export the way GitHub Pages will serve it, including the
+deployment prefix and trailing-slash resolution:
+
+```bash
+node scripts/serve-like-pages.mjs
+```
+
 ## Layout
 
 | Path | Role |
 | --- | --- |
-| `src/app/page.tsx` | The default experience. Six sections, composed from `components/horizon/sections/`. |
-| `src/app/work/` | The case index and one page per case, generated from `data/projects.ts`. |
-| `src/app/raw/` | The reel, and the only route that loads three.js or the display fonts. |
-| `src/data/identity.ts` | Who, where, and the contact destinations. Edited by hand; nothing else hard-codes any of it. |
+| `src/app/(reel)/page.tsx` | The landing page. The cinematic reel. |
+| `src/app/portfolio/page.tsx` | The readable site. Seven sections, composed from `components/horizon/sections/`. |
+| `src/app/portfolio/work/` | The case index and one page per case, generated from `data/projects.ts`. |
+| `src/data/identity.ts` | Who, where, the contact destinations, and the six pipeline stages. Edited by hand; nothing else hard-codes any of it. |
 | `src/data/projects.ts` | The cases. Every narrative section is optional, so a thin case is a short page rather than a page of empty headings. |
-| `src/data/photos.ts` | Captions, alt text and provenance per photograph, over a generated file manifest. |
+| `src/data/photos.ts` | Captions, alt text and provenance per photograph, over a generated file manifest. Photographs only. |
+| `src/data/artwork.ts` | The three illustrations. Kept in their own file so a made image cannot be filed among documentary photographs. |
 | `src/data/raw.ts` | Only what the reel needs: chapters, per-chapter theming, era stamps. |
 | `src/lib/prefs.ts` | The inline boot script. Resolves motion, pause and mode before the first paint. |
 | `src/lib/photo-src.ts` | Builds `srcset` and fallback URLs from the generated manifest. |
@@ -55,18 +61,16 @@ ignored for the second that mattered. CSS reads those attributes;
 `MotionProvider` subscribes to them through `useSyncExternalStore` rather than
 keeping a copy that would start out wrong.
 
-**The hero effect is gated on layout, not on a media query.** CSS grants the
-hero section its extra height only on eligible desktops, and `HeroMotion` simply
-checks whether there is travel to scrub against. The two can never disagree, and
-where the effect is not wanted there is no mystery scrolling to explain. gsap is
-imported only after that check passes, so phones and reduced-motion visitors
-never download it.
+**Photographs and illustrations do not share a list.** `photos.ts` is a record
+of places somebody stood. `artwork.ts` is three images built to the design. Both
+are fine to put on a page, but only one of them can be offered as evidence, so
+they never share a type, a caption style or the photography wall. The pipeline
+that sizes them writes two manifests into `photo-files.ts` for the same reason.
 
-**Only one ambient effect runs at a time.** `frame-scheduler.ts` watches the
-`LivingFrame`s with one IntersectionObserver and activates the most visible one.
-Opening the photo viewer sets `data-viewer="open"`, which pauses all of them —
-scenery competing with the photograph somebody just asked to look at is the
-wrong priority.
+**The hero is one viewport.** An earlier version granted 140vh of extra height
+on desktop for a photograph-to-diagram sequence. The height outlived the
+sequence, which is how a visitor got a blank page between the headline and the
+work. Do not put that travel back without also pinning `[data-hero-stage]`.
 
 **`Photo` is a plain `<picture>`, deliberately.** A static export means
 `images.unoptimized`, at which point `next/image` adds a client component and
@@ -82,7 +86,7 @@ Write uniforms through a ref to the material — react-three-fiber keeps its own
 copy of the object passed as the `uniforms` prop, so mutating yours updates
 nothing.
 
-## Photographs
+## Photographs and artwork
 
 `public/photos` is generated. The originals are never committed.
 
@@ -90,14 +94,16 @@ nothing.
 node scripts/process-photos.mjs <source-dir>
 ```
 
-Each photograph becomes a set of WebP widths plus one JPEG of the same crop,
-sized by the role it plays, and named by its actual width because that is what a
+Each source becomes a set of WebP widths plus one JPEG of the same crop, sized
+by the role it plays, and named by its actual width because that is what a
 `srcset` descriptor states. The script also writes `src/data/photo-files.ts`, so
 the dimensions in the markup can never drift from the pixels on disk.
 
-`composite-study` is assembled by the same script from two of the photographs.
-It is the only image here that is not documentary, and it is labelled as a
-composite everywhere it appears.
+Artwork arrives smaller than a retina hero, so the script resamples it up with
+Lanczos before encoding. That would be indefensible for a photograph — there is
+no sensor detail to recover. It is defensible here because these are smooth
+gradients and fine linework, and the alternative is the browser doing a worse
+job of the same scaling at display time.
 
 ## Accessibility
 
@@ -120,24 +126,22 @@ Things deliberately left, so they are not mistaken for oversights.
 element moves and everything else stays locked — falling water, drifting mist,
 a passing train. Doing that honestly needs assets that do not exist yet: per
 photograph, a motion mask, a protected-foreground holdout and a flow map. The
-original photograph is not a motion asset. Only the mist band over the composite
-study is animated, because it is a synthetic gradient rather than a claim about
-the photograph underneath. A Live Photo and a video exist and are the right
-starting point when this is picked up.
+original photograph is not a motion asset. A Live Photo and a video exist and
+are the right starting point when this is picked up.
 
 **Some copy needs the owner's eye.** Cases with `confirmed: false` in
-`data/projects.ts` — enterprise search, Warranty Wala, Temporal Nexus — are
-accurate as far as they go but have not been read back by the person they are
-about. Photographs with `located: false` in `data/photos.ts` carry a descriptive
-working place rather than a confirmed one.
+`data/projects.ts` — shareholder analytics, enterprise search, Warranty Wala,
+Temporal Nexus — are accurate as far as they go but have not been read back by
+the person they are about. Photographs with `located: false` in `data/photos.ts`
+carry a descriptive working place rather than a confirmed one.
 
 **No résumé link.** `contact.resume` is null, so no résumé button renders rather
 than a dead one.
 
-**Internal work stays internal.** The enterprise search case has no
-screenshots, metrics or architecture, and says so in place. It is context, not
-evidence, and should not be read as a portfolio artefact.
+**Internal work stays internal.** The shareholder analytics and enterprise
+search cases have no screenshots, metrics or architecture, and say so in place.
+They are context, not evidence, and should not be read as portfolio artefacts.
 
 **The JavaScript floor is the framework.** About 172KB gzipped on every route is
 the Next app-router baseline; the page code adds roughly 5KB to it. The reel is
-far heavier, which is the price of three.js and is charged only to `/raw`.
+far heavier, which is the price of three.js and is charged only to `/`.

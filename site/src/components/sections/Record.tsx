@@ -5,7 +5,7 @@ import Photo from "@/components/Photo";
 import { gsap } from "@/lib/gsap";
 import { scene } from "@/lib/scene";
 import { photos } from "@/data/photos";
-import { capabilities, identity, path } from "@/data/identity";
+import { capabilities, identity, pipeline } from "@/data/identity";
 import { aboutCopy } from "@/data/raw";
 
 export default function Record() {
@@ -125,31 +125,22 @@ export default function Record() {
           </div>
         </div>
 
-        {/* Timeline */}
+        {/* The stages, where a list of years used to be. The years said where
+            this happened; these say what it is, which is the part worth the
+            space. Same content as the portfolio's chapter 03, in this mode's
+            idiom: one row each, no illustration, nothing to click. */}
         <div className="mt-24 border-t border-white/10">
-          {path.map((entry) => (
+          {pipeline.stages.map((stage, index) => (
             <div
-              key={`${entry.year}-${entry.place}`}
+              key={stage.id}
               data-record-row
-              className="grid grid-cols-12 items-center gap-4 border-b border-white/10 py-6"
+              className="grid grid-cols-12 items-baseline gap-4 border-b border-white/10 py-6"
             >
               <span className="col-span-3 font-display text-xl text-[var(--accent)] sm:col-span-2 sm:text-2xl">
-                {entry.year}
+                {String(index + 1).padStart(2, "0")}
               </span>
-              <span className="hud col-span-9 text-[0.6rem] sm:col-span-3">{entry.place}</span>
-              <p className="col-span-12 text-sm text-bone/65 sm:col-span-5">{entry.note}</p>
-              <div className="col-span-12 sm:col-span-2">
-                {entry.photo && (
-                  <div className="relative ml-auto h-16 w-16 overflow-hidden rounded-sm border border-white/10 grayscale transition-all duration-700 hover:grayscale-0">
-                    <Photo
-                      slug={entry.photo}
-                      alt={photos[entry.photo].alt}
-                      sizes="64px"
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  </div>
-                )}
-              </div>
+              <span className="hud col-span-9 text-[0.6rem] sm:col-span-3">{stage.name}</span>
+              <p className="col-span-12 text-sm text-bone/65 sm:col-span-7">{stage.detail}</p>
             </div>
           ))}
         </div>

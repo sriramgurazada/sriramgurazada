@@ -51,6 +51,67 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "shareholder-analytics",
+    title: "Shareholder analytics",
+    category: "Applied AI",
+    status: "In production",
+    dates: "2025 — present",
+    role: "Software engineer, Goldman Sachs",
+    summary:
+      "Answering questions about who owns a company, from filings and market data, with the evidence attached to every answer.",
+    tags: ["Agents", "Retrieval", "Evaluation"],
+    featured: true,
+    sections: [
+      {
+        heading: "The problem",
+        body: [
+          "Ownership is a question with a deceptively simple shape. Who holds this company, how much, since when, and what changed this quarter. The data to answer it is spread across regulatory filings, market feeds and internal records that each describe the same institution under a slightly different name, at a slightly different date, with a slightly different idea of what counts as a holding.",
+          "So the work is not the question. It is reconciling the sources well enough that the answer means something, and being able to show which document each figure came from.",
+        ],
+      },
+      {
+        heading: "What this page is",
+        body: [
+          "This is internal work on a regulated desk, so what follows is the shape of the problem and the principles I work by. No implementation, no architecture, no numbers, no screenshots.",
+        ],
+      },
+      {
+        heading: "How I think about it",
+        points: [
+          {
+            title: "An answer without its source is a rumour",
+            body: "Every figure has to carry a path back to the filing or record it came from. In this domain a number nobody can trace is not a weaker answer; it is unusable.",
+          },
+          {
+            title: "Agents are made of steps you can inspect",
+            body: "A question gets decomposed into retrieval, reconciliation and reasoning stages, each one observable on its own, because a single opaque call that returns a confident paragraph cannot be debugged or defended.",
+          },
+          {
+            title: "Entity resolution is the actual work",
+            body: "Most of the difficulty is deciding that two differently-spelled names, filed in different jurisdictions, are the same holder. Get that wrong and every aggregate above it is wrong in a way that looks fine.",
+          },
+          {
+            title: "Refusing is a supported outcome",
+            body: "When the sources disagree or the coverage runs out, saying so beats interpolating. The interesting evaluation cases are the ones where the correct response is that this cannot be answered yet.",
+          },
+        ],
+      },
+      {
+        heading: "My part in it",
+        body: [
+          "I work on the retrieval and evaluation side, as one engineer on a team. Nothing here is mine alone.",
+        ],
+      },
+    ],
+    withheld:
+      "Internal work on a regulated desk. No screenshots, metrics or architecture can be published, so this case is written as context rather than as evidence.",
+    limitations: [
+      "Nothing here can be independently verified from outside the firm. Read it as how I work, not as a portfolio artefact.",
+    ],
+    confirmed: false,
+  },
+
+  {
     slug: "enterprise-search",
     title: "Enterprise search",
     category: "Search and retrieval",
@@ -152,7 +213,6 @@ export const projects: Project[] = [
     summary:
       "Single sign-on and multi-factor authentication across more than a thousand applications, where one misconfiguration is a breach.",
     tags: ["SAML", "OIDC", "Automation"],
-    featured: true,
     sections: [
       {
         heading: "The problem",

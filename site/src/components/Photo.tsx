@@ -1,8 +1,8 @@
-import { files, type PhotoSlug } from "@/data/photos";
+import { assetFiles, type AssetSlug } from "@/data/photo-files";
 import { photoFallback, photoSrcSet } from "@/lib/photo-src";
 
 type Props = {
-  slug: PhotoSlug;
+  slug: AssetSlug;
   alt: string;
   /**
    * The `sizes` attribute. Required, because a wrong one is the difference
@@ -18,7 +18,7 @@ type Props = {
 };
 
 /**
- * A photograph, as a plain <picture>.
+ * A photograph or an illustration, as a plain <picture>.
  *
  * Every photograph is pre-derived by scripts/process-photos.mjs, so there is no
  * optimizer to run and nothing to negotiate at request time: WebP for anything
@@ -31,7 +31,7 @@ type Props = {
  * base-path hazards while doing none of the work that would justify either.
  */
 export default function Photo({ slug, alt, sizes, className, priority, position }: Props) {
-  const file = files[slug];
+  const file = assetFiles[slug];
 
   return (
     // display:contents, so <picture> does nothing to the layout and the <img>

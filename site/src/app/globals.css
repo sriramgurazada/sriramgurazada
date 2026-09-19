@@ -250,36 +250,54 @@ html.lenis body {
    Decorative motion opts in by marking itself [data-ambient], and is then
    governed entirely from here rather than by each effect remembering to check.
 
-   The default is paused. That single line is what makes a frame with no
-   JavaScript, a frame that has scrolled away, and a frame during the first
-   paint all behave identically: as the still photograph they are built on.
-
    An effect runs only when every one of these agrees:
-     · the frame scheduler has chosen it as the one active frame
      · the tab is visible
      · motion preference is Full
      · the Pause control is off
-     · no photo viewer is open */
+     · no photo viewer is open
 
-[data-ambient] {
-  animation-play-state: paused;
-}
-
-[data-living-frame][data-active="true"] [data-ambient] {
-  animation-play-state: running;
-}
+   Everything this governs is built to be correct while still, so a frame with
+   no JavaScript, a frame in a hidden tab and a frame during the first paint all
+   look the same as one that has simply been paused. */
 
 html[data-paused="true"] [data-ambient],
 html[data-hidden="true"] [data-ambient],
 html[data-viewer="open"] [data-ambient] {
-  animation-play-state: paused !important;
+  animation-play-state: paused;
 }
 
-/* Reduced goes further than paused: no loop exists at all, and the static
-   composition is what remains. */
+/* Reduced goes further than paused: no loop exists at all, and whatever the
+   element looks like at rest is what remains. */
 html[data-motion="reduced"] [data-ambient] {
   animation: none !important;
-  opacity: 0 !important;
+}
+
+/* The waypoint halos on the pipeline. A slow, shallow breath at low opacity —
+   enough to suggest the route is live, small enough that six of them at once do
+   not turn into a light show.
+
+   The stagger is a negative animation-delay set per node in the markup, because
+   each halo is an only child and no nth-child selector can tell them apart. */
+[data-node-halo] {
+  animation: node-halo 4.5s ease-in-out infinite;
+}
+
+@keyframes node-halo {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-node-halo] {
+    animation: none;
+  }
 }
 
 html[data-motion="reduced"] .grain {
@@ -292,33 +310,19 @@ html[data-motion="reduced"] .grain {
   }
 }
 
-/* ---------- The signature transformation ----------
-   The hero is one sticky stage inside a taller section. The extra height is
-   the scroll travel the transformation is scrubbed against, so granting or
-   withholding that height is the whole eligibility decision — and it is made in
-   CSS, which means it is right on the first paint and needs no script.
-
-   Phones get no travel at all. Neither does a visitor who has asked for reduced
-   motion, whether through the operating system or the control in the header,
-   because 140vh of scrolling that does nothing is worse than no effect. */
+/* ---------- The opening stage ----------
+   One viewport, and that is all. The previous version granted 140vh of extra
+   height on desktop for a photograph-to-diagram sequence that is no longer
+   here. The height stayed after the sequence left, which is how a visitor got
+   a blank page between the headline and the work. The stage is still sticky so
+   that if the travel is ever restored, it pins rather than leaving emptiness
+   underneath. */
 
 [data-hero] {
   min-height: 100svh;
 }
 
-@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-  [data-hero] {
-    /* One viewport to read, then the 140vh of travel the design allows. */
-    min-height: 240svh;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  [data-hero] {
-    min-height: 100svh;
-  }
-}
-
-html[data-motion="reduced"] [data-hero] {
-  min-height: 100svh;
+[data-hero-stage] {
+  position: sticky;
+  top: 0;
 }

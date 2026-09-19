@@ -8,6 +8,7 @@ import { identity } from "@/data/identity";
 
 const NAV = [
   { label: "Work", href: "/portfolio/work" },
+  { label: "How it runs", href: "/portfolio#how" },
   { label: "Field notes", href: "/portfolio#field-notes" },
   { label: "About", href: "/portfolio#about" },
   { label: "Contact", href: "/portfolio#contact" },
