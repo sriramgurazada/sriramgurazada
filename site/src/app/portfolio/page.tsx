@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import SiteShell from "@/components/horizon/SiteShell";
 import Hero from "@/components/horizon/sections/Hero";
 import SelectedWork from "@/components/horizon/sections/SelectedWork";
+import Pipeline from "@/components/horizon/sections/Pipeline";
 import FieldNotes from "@/components/horizon/sections/FieldNotes";
 import MyPath from "@/components/horizon/sections/MyPath";
 import NextHorizon from "@/components/horizon/sections/NextHorizon";
@@ -16,6 +17,7 @@ export default function Portfolio() {
     <SiteShell>
       <Hero />
       <SelectedWork />
+      <Pipeline />
       <FieldNotes />
       <MyPath />
       <NextHorizon />

@@ -1,10 +1,11 @@
 # Sriram Gurazada
 
-Software engineer in Dallas. I work on search and retrieval at **Goldman Sachs** —
-the problem of making a very large organisation's own documents findable by the
+Software engineer in Dallas. I work on shareholder analytics and enterprise
+search at **Goldman Sachs** — questions about who owns a company, and the
+problem of making a very large organisation's own documents findable by the
 people already allowed to read them.
 
-**[The full portfolio lives here →](https://sriramgurazada.github.io/sriramgurazada/)**
+**[The full portfolio lives here →](https://sriramgurazada.github.io/sriramgurazada/portfolio/)**
 
 Before this I spent several years on federated identity, which is the unglamorous
 business of making sure a thousand applications all agree about who you are. I
@@ -14,13 +15,18 @@ studied computer science at **USC** and finished in 2025.
 
 ## What I work on
 
+**Shareholder analytics.** Who holds a company, how much, since when, and what
+changed. The work is reconciling filings and market data well enough that the
+answer means something, and attaching the source to every figure.
+
 **Search and retrieval.** The part nobody demos: knowing which of your million
 documents is the one, and being able to prove it was. Hybrid retrieval, because
 lexical and semantic matching fail on different queries. Evaluation first,
 because a retrieval change nobody can measure is a guess with extra steps.
 
-**AI you can depend on.** Systems whose confidence tracks the evidence, and that
-say so when the evidence runs out. An empty answer is an answer.
+**Agents you can inspect.** Tool-using systems decomposed into steps you can
+debug, whose confidence tracks the evidence, and that say so when the evidence
+runs out. An empty answer is an answer.
 
 **Identity and access.** SAML, OIDC and OAuth across more than a thousand
 applications, where one misconfiguration is a breach. It teaches you to care
@@ -32,7 +38,8 @@ about the failure modes first.
 
 | | |
 | --- | --- |
-| **Enterprise search** | Retrieval and evaluation at Goldman Sachs. Internal work, so the [case study](https://sriramgurazada.github.io/sriramgurazada/work/enterprise-search/) is the shape of the problem rather than the implementation. |
+| **Shareholder analytics** | Ownership questions answered from filings and market data, with the evidence attached. Internal work, so the [case study](https://sriramgurazada.github.io/sriramgurazada/portfolio/work/shareholder-analytics/) is the shape of the problem rather than the implementation. |
+| **Enterprise search** | Retrieval and evaluation at Goldman Sachs. Internal work, so the [case study](https://sriramgurazada.github.io/sriramgurazada/portfolio/work/enterprise-search/) is the shape of the problem rather than the implementation. |
 | **Warranty Wala** | A side project about product warranties and the paperwork that comes with them. In development. |
 | **Identity at enterprise scale** | Single sign-on and MFA across 1000+ applications. Certificate renewal moved from an alert that fires after the expiry to a pipeline that runs before it. |
 | **[Retrieval that knows its limits](https://github.com/sriramgurazada)** | LoRA fine-tuning over a hybrid FAISS and BM25 retriever, so a model's confidence tracks what the documents actually support. |
@@ -52,7 +59,7 @@ about the failure modes first.
 
 Smaller builds — a hospital management system, a GraphQL event service, sentiment
 classification over Amazon reviews, campus safety analysis — are on
-[the work page](https://sriramgurazada.github.io/sriramgurazada/work/).
+[the work page](https://sriramgurazada.github.io/sriramgurazada/portfolio/work/).
 
 ---
 

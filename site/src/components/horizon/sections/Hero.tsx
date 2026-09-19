@@ -1,17 +1,14 @@
 import Link from "next/link";
 import Photo from "@/components/Photo";
-import HorizonDiagram from "@/components/horizon/HorizonDiagram";
-import HeroMotion from "@/components/horizon/HeroMotion";
+import { art } from "@/data/artwork";
 import { hero, identity } from "@/data/identity";
-import { photos } from "@/data/photos";
 
 /**
  * Chapter 01. The grand overlook.
  *
  * Everything that matters is in the first paint: the name, the role, the
- * headline and both actions are server-rendered text over a photograph, so a
+ * headline and both actions are server-rendered text over the illustration, so a
  * visitor can read who this is and get to the work before any script arrives.
- * The sequence in HeroMotion decorates this; it is not what produces it.
  */
 export default function Hero() {
   return (
@@ -24,32 +21,31 @@ export default function Hero() {
       >
         <div data-hero-photo className="absolute inset-0">
           <Photo
-            slug="overlook"
-            alt={photos.overlook.alt}
+            slug="horizon-vista"
+            alt={art("horizon-vista").alt}
             priority
             sizes="100vw"
             className="h-full w-full object-cover"
-            // The person and the car are on the right of the frame. Holding the
-            // crop left of centre keeps them clear of the headline.
-            position="30% 50%"
+            // The sun break and the figure are on the right. Holding the crop
+            // right of centre keeps both in frame as the viewport narrows, and
+            // leaves the dark rock on the left under the headline.
+            position="62% 50%"
           />
         </div>
 
-        {/* Type over photography needs its own shadow to sit in, but only where
-            the type is. Both scrims reach full strength behind the copy in the
-            bottom left and are gone by two thirds of the way across and up, so
-            the sky — which is the whole reason this photograph is here — is left
-            at its own contrast rather than sitting under a flat grey wash. */}
+        {/* The illustration was built with its own darkness on the left, which is
+            most of the job a scrim usually does. What is left is a light floor
+            under the copy and a gentle wash from the left edge — both gone well
+            before the sun break, so the part worth looking at keeps its own
+            contrast instead of sitting under flat grey. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-basalt via-basalt/55 via-30% to-transparent to-68%"
+          className="absolute inset-0 bg-gradient-to-t from-basalt via-basalt/45 via-26% to-transparent to-62%"
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-r from-basalt/75 via-basalt/20 via-38% to-transparent to-62%"
+          className="absolute inset-0 bg-gradient-to-r from-basalt/70 via-basalt/15 via-34% to-transparent to-56%"
         />
-
-        <HorizonDiagram className="absolute inset-0 h-full w-full" />
 
         <div data-hero-copy className="shell relative">
           <p className="label">
@@ -82,8 +78,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      <HeroMotion />
     </section>
   );
 }
