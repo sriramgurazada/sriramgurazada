@@ -49,11 +49,12 @@ export default function HUD() {
             className="group flex items-center justify-end gap-3"
             title={chapter.title}
           >
+            {/* Revealed on hover only. The chapter name is already set in the
+                header, and a permanent label here lands on top of the work
+                panel, which shares this edge of the frame. */}
             <span
-              className={`hud text-[0.55rem] transition-all duration-500 ${
-                active === i
-                  ? "text-[var(--accent)] opacity-100"
-                  : "opacity-0 group-hover:opacity-60"
+              className={`hud whitespace-nowrap text-[0.55rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
+                active === i ? "text-[var(--accent)]" : ""
               }`}
             >
               {chapter.title}
