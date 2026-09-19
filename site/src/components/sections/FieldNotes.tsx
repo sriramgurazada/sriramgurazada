@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import { scene } from "@/lib/scene";
+import { asset } from "@/lib/asset";
 import { fieldNotes, fieldNotesIntro } from "@/data/content";
 
 // Editorial rhythm: uneven spans so the grid never reads as a spec sheet.
@@ -115,7 +116,7 @@ export default function FieldNotes() {
             style={{ ["--wipe" as string]: "100%" }}
           >
             <Image
-              src={note.plate}
+              src={asset(note.plate)}
               alt={note.caption}
               fill
               sizes="(max-width: 640px) 100vw, 50vw"
@@ -133,7 +134,7 @@ export default function FieldNotes() {
               }}
             >
               <Image
-                src={note.plate}
+                src={asset(note.plate)}
                 alt=""
                 fill
                 sizes="(max-width: 640px) 100vw, 50vw"

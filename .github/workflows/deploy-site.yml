@@ -1,0 +1,75 @@
+name: Deploy site
+
+# The portfolio is a static export, so it is rebuilt and republished whenever
+# anything under site/ lands on main.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/deploy-site.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two publishes race. In-progress runs are allowed to finish so a
+# deploy is not left half-applied.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+        with:
+          # Turns Pages on for the repository if it is not already, so the
+          # first run does not need the settings page visited first.
+          enablement: true
+
+      - name: Install
+        working-directory: site
+        run: npm ci
+
+      - name: Build
+        working-directory: site
+        # Pages serves this repository from /<repo> rather than the domain
+        # root. next.config.ts reads this to set basePath, and src/lib/asset.ts
+        # uses it for the URLs Next does not rewrite itself.
+        env:
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+        run: npm run build
+
+      - name: Disable Jekyll
+        # Harmless for the Actions pipeline, but means the output still works
+        # if this is ever published from a branch, where Jekyll would drop the
+        # _next directory for having a leading underscore.
+        run: touch site/out/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
