@@ -2,6 +2,11 @@ name: Deploy site
 
 # The portfolio is a static export, so it is rebuilt and republished whenever
 # anything under site/ lands on main.
+#
+# This requires Pages to be enabled on the repository first, under
+# Settings -> Pages -> Build and deployment -> Source -> GitHub Actions.
+# A workflow cannot do it: configure-pages can only create the Pages site
+# when given a token with administration:write, which GITHUB_TOKEN is not.
 on:
   push:
     branches: [main]
@@ -25,21 +30,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
           cache-dependency-path: site/package-lock.json
 
       - name: Configure Pages
         id: pages
-        uses: actions/configure-pages@v5
-        with:
-          # Turns Pages on for the repository if it is not already, so the
-          # first run does not need the settings page visited first.
-          enablement: true
+        uses: actions/configure-pages@v6
 
       - name: Install
         working-directory: site
@@ -54,13 +55,7 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
         run: npm run build
 
-      - name: Disable Jekyll
-        # Harmless for the Actions pipeline, but means the output still works
-        # if this is ever published from a branch, where Jekyll would drop the
-        # _next directory for having a leading underscore.
-        run: touch site/out/.nojekyll
-
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site/out
 
@@ -72,4 +67,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
