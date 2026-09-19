@@ -35,6 +35,9 @@ export default function FieldNotes() {
             record={wide}
             sizes="(min-width: 1024px) 60vw, 92vw"
             className="aspect-2/1 w-full object-cover lg:aspect-auto lg:h-full"
+            // The cables and the tower sit in the lower half of this frame.
+            // A centred crop of a 4:3 photograph into 2:1 kept only sky.
+            position="50% 72%"
             priority
           />
           <Frame
@@ -65,12 +68,14 @@ function Frame({
   record,
   sizes,
   className,
+  position,
   priority,
 }: {
   index: string;
   record: ReturnType<typeof photo>;
   sizes: string;
   className: string;
+  position?: string;
   priority?: boolean;
 }) {
   return (
@@ -81,6 +86,7 @@ function Frame({
           alt={record.alt}
           sizes={sizes}
           className={className}
+          position={position}
           priority={priority}
         />
       </div>

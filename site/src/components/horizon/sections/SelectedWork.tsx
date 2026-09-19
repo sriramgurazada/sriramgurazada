@@ -25,13 +25,13 @@ export default function SelectedWork() {
           slug="contour-ridge"
           alt=""
           sizes="46vw"
-          className="h-full w-full object-cover opacity-70"
-          position="70% 50%"
+          className="h-full w-full object-cover opacity-90"
+          position="78% 42%"
         />
-        {/* Into the page on the left, and softened top and bottom, so there is no
-            visible edge anywhere the illustration meets the background. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-basalt via-basalt/25 via-38% to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-basalt via-transparent via-35% to-basalt" />
+        {/* A short fade into the copy on the left, and nothing else. The last
+            version washed the ridge out so thoroughly that the illustration
+            might as well not have been there. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-basalt via-basalt/40 via-22% to-transparent to-48%" />
       </div>
 
       <div className="shell relative">

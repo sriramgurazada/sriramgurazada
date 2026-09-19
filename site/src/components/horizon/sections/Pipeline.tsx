@@ -27,9 +27,9 @@ export default function Pipeline() {
           slug="system-graph"
           alt=""
           sizes="100vw"
-          className="h-full w-full object-cover opacity-40"
+          className="h-full w-full object-cover opacity-55"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-basalt via-basalt/55 to-basalt" />
+        <div className="absolute inset-0 bg-gradient-to-b from-basalt via-basalt/35 to-basalt" />
       </div>
 
       <div className="shell relative">
