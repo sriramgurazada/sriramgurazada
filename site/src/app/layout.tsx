@@ -1,51 +1,48 @@
 import type { Metadata, Viewport } from "next";
-import { Cinzel, Inter, JetBrains_Mono } from "next/font/google";
-import { identity } from "@/data/content";
+import { Inter } from "next/font/google";
+import { identity } from "@/data/identity";
+import { BOOT_SCRIPT } from "@/lib/prefs";
 import "./globals.css";
 
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800", "900"],
-  display: "swap",
-});
-
+/**
+ * One grotesk for the whole readable site. Raw mode loads its own display and
+ * monospace faces from its own layout, so those bytes never reach a visitor who
+ * does not go there.
+ */
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
 
-const mono = JetBrains_Mono({
-  variable: "--font-mono-hud",
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  display: "swap",
-});
+const title = `${identity.shortName} — ${identity.role}`;
+const description =
+  "Software engineer in Dallas. Search and retrieval, applied AI, and the systems " +
+  "underneath them. Selected work, field notes and photography.";
 
 export const metadata: Metadata = {
-  title: `${identity.shortName} — ${identity.subtitle}`,
-  description:
-    "Identity and access engineering, applied AI, and cloud infrastructure. A cinematic portfolio in five chapters.",
-  openGraph: {
-    title: `${identity.shortName} — ${identity.subtitle}`,
-    description:
-      "Identity and access engineering, applied AI, and cloud infrastructure. A cinematic portfolio in five chapters.",
-    type: "website",
-  },
+  title: { default: title, template: `%s — ${identity.shortName}` },
+  description,
+  applicationName: "HORIZON",
+  authors: [{ name: identity.shortName }],
+  openGraph: { title, description, type: "website", siteName: identity.shortName },
+  twitter: { card: "summary_large_image", title, description },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#040404",
+  themeColor: "#080d12",
   colorScheme: "dark",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${cinzel.variable} ${inter.variable} ${mono.variable}`}>
-      <body className="bg-ink text-bone antialiased">{children}</body>
+    <html lang="en" className={inter.variable}>
+      <head>
+        {/* Resolves the motion preferences before the first paint. A reduced
+            preference honoured after hydration was not honoured. */}
+        <script dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }} />
+      </head>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

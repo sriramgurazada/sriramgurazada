@@ -1,4 +1,4 @@
-import type { Theme } from "@/data/content";
+import type { Theme } from "@/data/raw";
 
 type RGB = [number, number, number];
 

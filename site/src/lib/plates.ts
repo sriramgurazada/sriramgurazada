@@ -1,20 +1,17 @@
-import { chapters, finalePlate, heroPlate } from "@/data/content";
-import { asset } from "@/lib/asset";
+import { chapters, finalePlate, heroPlate } from "@/data/raw";
+import { largestPhoto } from "@/lib/photo-src";
 
 /**
  * Every photograph the WebGL stage can display, in narrative order. Sections
  * refer to plates by index so the shader only ever holds two textures at once.
  *
- * These are resolved through `asset` because they are handed to a THREE
- * texture loader rather than to `next/image`, which would apply the base path
- * itself. The same files referenced from `content.ts` by DOM components are
- * deliberately left raw for that reason.
+ * These resolve to the largest derivative of each photograph and are prefixed
+ * for the deployment, because a THREE texture loader fetches them itself and so
+ * gets none of the rewriting the framework does for its own URLs.
  */
-export const plateList: string[] = [
-  heroPlate,
-  ...chapters.map((c) => c.plate),
-  finalePlate,
-].map(asset);
+export const plateList: string[] = [heroPlate, ...chapters.map((c) => c.plate), finalePlate].map(
+  largestPhoto
+);
 
 export const HERO_PLATE = 0;
 export const FINALE_PLATE = plateList.length - 1;

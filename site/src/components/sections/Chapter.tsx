@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { scene, setTheme } from "@/lib/scene";
 import { chapterPlate } from "@/lib/plates";
-import type { Chapter as ChapterType, Credit, Work } from "@/data/content";
+import type { Chapter as ChapterType, Credit, Work } from "@/data/raw";
 
 type Props = {
   chapter: ChapterType;

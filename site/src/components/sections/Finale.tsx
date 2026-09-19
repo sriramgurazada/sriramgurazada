@@ -4,13 +4,10 @@ import { useLayoutEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { scene, setTheme } from "@/lib/scene";
 import { FINALE_PLATE } from "@/lib/plates";
-import { chapters, finaleTheme, identity } from "@/data/content";
+import { chapters, finaleTheme, identity } from "@/data/raw";
+import { contactLinks } from "@/data/identity";
 
-const LINKS = [
-  { label: "Email", value: identity.email, href: `mailto:${identity.email}` },
-  { label: "LinkedIn", value: "gschandra123", href: identity.linkedin },
-  { label: "GitHub", value: "sriramgurazada", href: identity.github },
-];
+const LINKS = contactLinks;
 
 export default function Finale() {
   const root = useRef<HTMLElement>(null);
@@ -142,7 +139,7 @@ export default function Finale() {
               carries the same signature. */}
           <span className="sm:hidden">{identity.shortName}</span>
           <span className="hidden sm:inline">{identity.name}</span>
-          <span>Photographs by the author</span>
+          <span>{identity.location}</span>
         </div>
       </div>
     </section>

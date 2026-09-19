@@ -1,11 +1,11 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import Image from "next/image";
+import Photo from "@/components/Photo";
 import { gsap } from "@/lib/gsap";
 import { scene } from "@/lib/scene";
-import { asset } from "@/lib/asset";
-import { fieldNotes, fieldNotesIntro } from "@/data/content";
+import { photos } from "@/data/photos";
+import { fieldNotes, fieldNotesIntro } from "@/data/raw";
 
 // Editorial rhythm: uneven spans so the grid never reads as a spec sheet.
 const SPANS = [
@@ -115,12 +115,11 @@ export default function FieldNotes() {
             className={`group relative overflow-hidden rounded-sm border border-white/8 ${SPANS[i]}`}
             style={{ ["--wipe" as string]: "100%" }}
           >
-            <Image
-              src={asset(note.plate)}
-              alt={note.caption}
-              fill
+            <Photo
+              slug={note.plate}
+              alt={photos[note.plate].alt}
               sizes="(max-width: 640px) 100vw, 50vw"
-              className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
             />
 
             {/* The same frame, reduced to its edges, revealed by the wipe. */}
@@ -133,12 +132,11 @@ export default function FieldNotes() {
                 mixBlendMode: "screen",
               }}
             >
-              <Image
-                src={asset(note.plate)}
+              <Photo
+                slug={note.plate}
                 alt=""
-                fill
                 sizes="(max-width: 640px) 100vw, 50vw"
-                className="object-cover"
+                className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
 
