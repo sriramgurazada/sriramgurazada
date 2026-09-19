@@ -38,57 +38,104 @@ export const hero = {
   lines: ["Software engineer in Dallas.", "Building useful systems. Exploring what comes next."],
 };
 
+/**
+ * Chapter 03. How a question becomes a defensible answer.
+ *
+ * This replaced a year-by-year timeline, which said where the owner had been
+ * without saying what he does. These are the stages that actually recur across
+ * the retrieval and agent work, described generically: no employer's
+ * architecture is being disclosed by writing down that retrieval comes before
+ * reasoning.
+ *
+ * `detail` is the line that earns the stage its place — a specific failure it
+ * exists to prevent, rather than a restatement of its own name.
+ */
+export const pipeline = {
+  heading: "How a question becomes an answer.",
+  standfirst:
+    "The same six stages keep showing up, whether the thing being built is a search box or an agent. Most of the engineering is in the last two.",
+  stages: [
+    {
+      id: "ingest",
+      name: "Ingest",
+      role: "Documents arrive",
+      detail:
+        "Permissions are attached here, at the door. Anything that treats access as a filter applied later has already retrieved something it should not have.",
+    },
+    {
+      id: "retrieve",
+      name: "Retrieve",
+      role: "Millions become a handful",
+      detail:
+        "Lexical and semantic matching fail on different questions, so both run and their disagreement is treated as information rather than noise.",
+    },
+    {
+      id: "ground",
+      name: "Ground",
+      role: "Every claim keeps its source",
+      detail:
+        "A figure that cannot be traced back to the document it came from is not a weaker answer. It is an unusable one.",
+    },
+    {
+      id: "reason",
+      name: "Reason",
+      role: "The agent plans and calls tools",
+      detail:
+        "Decomposed into steps that can each be inspected, because one opaque call returning a confident paragraph cannot be debugged or defended.",
+    },
+    {
+      id: "verify",
+      name: "Verify",
+      role: "Check before it ships",
+      detail:
+        "Held against an evaluation set written to catch the failures nobody thought of, since the cases you invent yourself will flatter you.",
+    },
+    {
+      id: "observe",
+      name: "Observe",
+      role: "Watch it in production",
+      detail:
+        "Retrieval quality drifts as the corpus moves underneath it. Without this stage you find out from a user, months late.",
+    },
+  ],
+};
+
 export const about = {
-  heading: "My path.",
+  heading: "Grounded. Curious. Still exploring.",
   /** Kept short on purpose. The work pages carry the detail. */
   body: [
-    "I am a software engineer in Dallas. I work on search and retrieval at Goldman Sachs — the problem of making a very large organisation's own documents findable by the people already allowed to read them.",
+    "I am a software engineer in Dallas. I work on shareholder analytics and enterprise search at Goldman Sachs — questions about who owns a company, and the problem of making a very large organisation's own documents findable by the people already allowed to read them.",
     "Before that I spent several years on federated identity, which is the unglamorous business of making sure a thousand applications all agree about who you are. It teaches you to care about the failure modes first.",
     "I studied computer science at USC and finished in 2025. Before that I was in India, publishing research on computer vision and on health records that cannot be quietly edited.",
     "The photographs are from the same years. I notice structure — cables, contours, grids, flow — which turns out to be the same instinct that makes the engineering work.",
   ],
 };
 
-export type Milestone = {
-  year: string;
-  place: string;
-  note: string;
-  /** A photograph, where one exists for that milestone. */
-  photo: "undergrad-computer-block" | "hollywood-sign" | "usc-steps-of-troy" | null;
-};
-
-export const path: Milestone[] = [
+/**
+ * Three frames instead of a timeline.
+ *
+ * A year-by-year list was the obvious way to present a career and the wrong one:
+ * it read as a CV rendered vertically, and the dates were the least interesting
+ * thing on the page. The prose above carries the chronology, so these three only
+ * have to do what photographs do — put a face and two real moments next to it.
+ */
+export const portraits = [
   {
-    year: "2020",
-    place: "India",
-    note: "Undergraduate in computer science, and the first three papers.",
-    photo: "undergrad-computer-block",
+    photo: "headshot",
+    label: "The engineer",
+    caption: "Dallas, currently. Search, retrieval and agents at Goldman Sachs.",
   },
   {
-    year: "2021",
-    place: "Enterprise identity",
-    note: "A thousand applications, federated one integration at a time.",
-    photo: null,
-  },
-  {
-    year: "2023",
-    place: "Los Angeles",
-    note: "USC. Machine learning, natural language processing, and a game engine on the side.",
-    photo: "hollywood-sign",
-  },
-  {
-    year: "2025",
-    place: "Steps of Troy",
-    note: "M.S. Computer Science, University of Southern California.",
     photo: "usc-steps-of-troy",
+    label: "The path",
+    caption: "M.S. Computer Science, USC, 2025. On the Steps of Troy, for once holding still.",
   },
   {
-    year: "2026",
-    place: "Dallas",
-    note: "Search and retrieval at Goldman Sachs.",
-    photo: null,
+    photo: "sunset-dock",
+    label: "What comes next",
+    caption: "Undecided, which is the point. There is always more of it.",
   },
-];
+] as const;
 
 /**
  * Chapter 05. These are interests and directions, labelled as such — not

@@ -4,7 +4,7 @@ import { nextHorizon } from "@/data/identity";
 import { photos } from "@/data/photos";
 
 /**
- * Chapter 05. The sunset silhouette, and three directions.
+ * Chapter 06. The sunset silhouette, and three directions.
  *
  * The three cards are labelled as interests in the standfirst, because the
  * difference between "things I am interested in" and "services I offer" is the
@@ -15,13 +15,14 @@ export default function NextHorizon() {
     <section id="next" className="relative scroll-mt-24 overflow-hidden py-24 sm:py-32">
       <div className="absolute inset-0">
         <Photo
-          slug="sunset-dock"
-          alt={photos["sunset-dock"].alt}
+          slug="overlook"
+          alt={photos.overlook.alt}
           sizes="100vw"
           className="h-full w-full object-cover"
-          // The sun and the figure sit centre-left; holding the crop there keeps
-          // both in frame when the section is much wider than the photograph.
-          position="40% 45%"
+          // The person and the weather sit on the right. Holding the crop left
+          // of centre keeps them out of the heading, and leaves the dark ridge
+          // under the three cards.
+          position="28% 50%"
         />
       </div>
       <div
@@ -32,7 +33,7 @@ export default function NextHorizon() {
 
       <div className="shell relative">
         <ChapterHeading
-          index="05"
+          index="06"
           eyebrow="Next horizon"
           heading={nextHorizon.heading}
           standfirst={nextHorizon.standfirst}

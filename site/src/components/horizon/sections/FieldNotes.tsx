@@ -4,7 +4,12 @@ import PhotoWall from "@/components/horizon/PhotoWall";
 import { openingFrames, photo, photoWall } from "@/data/photos";
 
 /**
- * Chapter 03. Two photographs at full weight, and then the wall.
+ * Chapter 04. Two photographs at full weight, and then the wall.
+ *
+ * Everything in this section is a photograph the owner took. The illustrations
+ * used elsewhere on the page are deliberately kept out: this is the one section
+ * offering itself as a record of places that exist, and a made image filed among
+ * them is what would put the rest in doubt.
  *
  * The wide frame beside the tall one is what makes this read as a wall rather
  * than as two pictures. Both are kept out of the gallery below so nothing
@@ -18,8 +23,8 @@ export default function FieldNotes() {
     <section id="field-notes" className="relative scroll-mt-24 py-24 sm:py-32">
       <div className="shell">
         <ChapterHeading
-          index="03"
-          eyebrow="Field notes"
+          index="04"
+          eyebrow="Field notes / the photography wall"
           heading="Every place leaves a pattern."
           standfirst="Photographs from the same years as the work. I notice structure — cables, contours, grids, flow — and it turns out to be the same instinct."
         />
@@ -30,6 +35,9 @@ export default function FieldNotes() {
             record={wide}
             sizes="(min-width: 1024px) 60vw, 92vw"
             className="aspect-2/1 w-full object-cover lg:aspect-auto lg:h-full"
+            // The cables and the tower sit in the lower half of this frame.
+            // A centred crop of a 4:3 photograph into 2:1 kept only sky.
+            position="50% 72%"
             priority
           />
           <Frame
@@ -60,12 +68,14 @@ function Frame({
   record,
   sizes,
   className,
+  position,
   priority,
 }: {
   index: string;
   record: ReturnType<typeof photo>;
   sizes: string;
   className: string;
+  position?: string;
   priority?: boolean;
 }) {
   return (
@@ -76,6 +86,7 @@ function Frame({
           alt={record.alt}
           sizes={sizes}
           className={className}
+          position={position}
           priority={priority}
         />
       </div>
