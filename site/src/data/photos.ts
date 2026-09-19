@@ -2,14 +2,14 @@ import { photoFiles, type PhotoSlug } from "@/data/photo-files";
 
 export type { PhotoSlug };
 
+/**
+ * Every photograph here is one of the owner's own, as taken. Nothing is
+ * assembled, composited or generated, which is why there is no `kind` to check:
+ * one assembled image mixed into a documentary collection is exactly what makes
+ * the whole collection untrustworthy.
+ */
 export type Photo = {
   slug: PhotoSlug;
-  /**
-   * `original` is a photograph as taken. `composite` is assembled from more
-   * than one photograph and is labelled as such wherever it appears, so it is
-   * never mistaken for documentary work.
-   */
-  kind: "original" | "composite";
   /** Describes the picture for anyone who cannot see it. */
   alt: string;
   /** Short all-caps label above the caption. */
@@ -33,7 +33,6 @@ export const files = photoFiles;
 export const photos = {
   overlook: {
     slug: "overlook",
-    kind: "original",
     label: "Overlook",
     caption: "You get above the weather and it turns out the weather has edges.",
     alt:
@@ -45,7 +44,6 @@ export const photos = {
 
   "redwood-road": {
     slug: "redwood-road",
-    kind: "original",
     label: "Depth",
     caption: "A vanishing point you can actually drive into.",
     alt:
@@ -57,7 +55,6 @@ export const photos = {
 
   "emerald-lake": {
     slug: "emerald-lake",
-    kind: "original",
     label: "Contour",
     caption: "Every ridge here is a load path that happened to win.",
     alt:
@@ -69,7 +66,6 @@ export const photos = {
 
   "balloon-flame": {
     slug: "balloon-flame",
-    kind: "original",
     label: "Ignition",
     caption: "Nothing rises without something burning underneath it.",
     alt:
@@ -81,7 +77,6 @@ export const photos = {
 
   "waterfall-hike": {
     slug: "waterfall-hike",
-    kind: "original",
     label: "Scale",
     caption: "A person, for scale. Always worth including.",
     alt:
@@ -93,7 +88,6 @@ export const photos = {
 
   "dallas-bridge": {
     slug: "dallas-bridge",
-    kind: "original",
     label: "Connections",
     caption: "Cables, fanned out. The same curve solved sixty times over.",
     alt:
@@ -105,7 +99,6 @@ export const photos = {
 
   "wing-city-lights": {
     slug: "wing-city-lights",
-    kind: "original",
     label: "Grid",
     caption: "Every city is a graph, if you get far enough above it.",
     alt:
@@ -117,7 +110,6 @@ export const photos = {
 
   "water-wall": {
     slug: "water-wall",
-    kind: "original",
     label: "Flow",
     caption: "Water moves. The frame stays still.",
     alt:
@@ -127,22 +119,8 @@ export const photos = {
     located: false,
   },
 
-  "composite-study": {
-    slug: "composite-study",
-    kind: "composite",
-    label: "Composite study",
-    caption: "Bridge cables over mountain contours. Two photographs, one idea.",
-    alt:
-      "Composite study: the lit arch and cables of the Dallas bridge placed into a " +
-      "snow-covered mountain cirque above a dark lake, with a city skyline glowing at " +
-      "the waterline.",
-    place: "Assembled from two of the photographs below",
-    located: true,
-  },
-
   "sunset-dock": {
     slug: "sunset-dock",
-    kind: "original",
     label: "Next",
     caption: "The good part is that there is always more of it.",
     alt:
@@ -154,7 +132,6 @@ export const photos = {
 
   headshot: {
     slug: "headshot",
-    kind: "original",
     label: "Portrait",
     caption: "",
     alt:
@@ -166,7 +143,6 @@ export const photos = {
 
   "usc-steps-of-troy": {
     slug: "usc-steps-of-troy",
-    kind: "original",
     label: "USC",
     caption: "",
     alt:
@@ -178,7 +154,6 @@ export const photos = {
 
   "usc-traveler": {
     slug: "usc-traveler",
-    kind: "original",
     label: "USC",
     caption: "",
     alt:
@@ -190,7 +165,6 @@ export const photos = {
 
   "undergrad-computer-block": {
     slug: "undergrad-computer-block",
-    kind: "original",
     label: "Where it started",
     caption: "",
     alt:
@@ -202,7 +176,6 @@ export const photos = {
 
   "hollywood-sign": {
     slug: "hollywood-sign",
-    kind: "original",
     label: "Los Angeles",
     caption: "",
     alt: "Sriram Gurazada standing on a hillside trail with the Hollywood sign behind him.",
@@ -212,7 +185,6 @@ export const photos = {
 
   "train-platform": {
     slug: "train-platform",
-    kind: "original",
     label: "Transit",
     caption: "Everything in the frame is still except the one thing that is not.",
     alt:
@@ -224,7 +196,6 @@ export const photos = {
 
   "chicago-river": {
     slug: "chicago-river",
-    kind: "original",
     label: "Chicago",
     caption: "",
     alt:
@@ -236,7 +207,6 @@ export const photos = {
 
   "la-skyline": {
     slug: "la-skyline",
-    kind: "original",
     label: "Downtown",
     caption: "Two million decisions, lit from the inside.",
     alt: "The downtown Los Angeles skyline at night, its towers lit against a black sky.",
@@ -246,7 +216,6 @@ export const photos = {
 
   "wind-turbine": {
     slug: "wind-turbine",
-    kind: "original",
     label: "Torque",
     caption: "Three blades, and nothing else to hide behind.",
     alt:
@@ -258,7 +227,6 @@ export const photos = {
 
   "golden-gate": {
     slug: "golden-gate",
-    kind: "original",
     label: "Suspension",
     caption: "The cables are doing all the work and none of the talking.",
     alt:
@@ -270,7 +238,6 @@ export const photos = {
 
   "sf-wheel": {
     slug: "sf-wheel",
-    kind: "original",
     label: "Waterfront",
     caption: "A lit wheel, and a pier full of sea lions ignoring it.",
     alt:
@@ -282,7 +249,6 @@ export const photos = {
 
   "antelope-canyon": {
     slug: "antelope-canyon",
-    kind: "original",
     label: "Strata",
     caption: "Time, stored as layers, readable by anyone who stops to look.",
     alt:
@@ -311,7 +277,8 @@ export const photoWall: PhotoSlug[] = [
 ];
 
 /**
- * The two frames of the story wall: the assembled composite beside the one
- * photograph the whole living-frame idea came from.
+ * The two frames that open the section, shown far larger than the wall below:
+ * one wide, one tall. Kept out of the wall so the section does not show the same
+ * photograph twice.
  */
-export const storyWall: PhotoSlug[] = ["composite-study", "water-wall"];
+export const openingFrames = { wide: "golden-gate", tall: "water-wall" } as const;
