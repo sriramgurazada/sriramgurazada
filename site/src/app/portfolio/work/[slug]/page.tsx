@@ -8,14 +8,14 @@ export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
 
-export async function generateMetadata(props: PageProps<"/work/[slug]">): Promise<Metadata> {
+export async function generateMetadata(props: PageProps<"/portfolio/work/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;
   const project = projectBySlug(slug);
   if (!project) return {};
   return { title: project.title, description: project.summary };
 }
 
-export default async function CaseStudy(props: PageProps<"/work/[slug]">) {
+export default async function CaseStudy(props: PageProps<"/portfolio/work/[slug]">) {
   const { slug } = await props.params;
   const project = projectBySlug(slug);
   if (!project) notFound();
@@ -27,7 +27,7 @@ export default async function CaseStudy(props: PageProps<"/work/[slug]">) {
       <article className="shell pt-32 pb-24 sm:pt-40 sm:pb-32">
         <header>
           <Link
-            href="/work"
+            href="/portfolio/work"
             className="label transition-colors duration-200 hover:text-ivory"
           >
             ← All work
@@ -129,14 +129,14 @@ export default async function CaseStudy(props: PageProps<"/work/[slug]">) {
         {/* Every case ends with another case and a way to get in touch, so a
             reader who arrived on a deep link is never at a dead end. */}
         <nav aria-label="Continue" className="mt-24 grid gap-px overflow-hidden rounded-sm bg-white/10 sm:grid-cols-2">
-          <Link href={`/work/${next.slug}`} className="group bg-basalt p-7 sm:p-9">
+          <Link href={`/portfolio/work/${next.slug}`} className="group bg-basalt p-7 sm:p-9">
             <p className="label">Next case</p>
             <p className="mt-3 text-title font-semibold tracking-tight transition-colors duration-200 group-hover:text-route">
               {next.title}
             </p>
             <p className="mt-2 max-w-[40ch] text-muted text-pretty">{next.summary}</p>
           </Link>
-          <Link href="/#contact" className="group bg-basalt p-7 sm:p-9">
+          <Link href="/portfolio#contact" className="group bg-basalt p-7 sm:p-9">
             <p className="label">Contact</p>
             <p className="mt-3 text-title font-semibold tracking-tight transition-colors duration-200 group-hover:text-route">
               Have a problem worth building for?

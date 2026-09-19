@@ -25,7 +25,7 @@ export default function SelectedWork() {
           {featuredProjects.map((project, index) => (
             <li key={project.slug} className="group relative border-b border-white/10">
               <Link
-                href={`/work/${project.slug}`}
+                href={`/portfolio/work/${project.slug}`}
                 className="grid gap-4 py-8 sm:py-10 lg:grid-cols-12 lg:items-baseline lg:gap-8"
               >
                 {/* The node on the route. */}
@@ -61,7 +61,7 @@ export default function SelectedWork() {
         </ol>
 
         <Link
-          href="/work"
+          href="/portfolio/work"
           className="mt-10 inline-flex min-h-11 items-center text-route underline decoration-route/30 underline-offset-4 transition-colors duration-200 hover:decoration-route"
         >
           All work, including the smaller things

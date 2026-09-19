@@ -12,8 +12,8 @@ import { chapters } from "@/data/raw";
  * Deliberately almost nothing: a progress rule down the left edge, the current
  * chapter named at the top, and one way out. The chapter jump links this used to
  * carry are gone — the whole point of a reel is that it plays, and a rail of
- * shortcuts down the edge of the frame argues with that. The readable site is
- * where navigation belongs.
+ * shortcuts down the edge of the frame argues with that. The portfolio is where
+ * navigation belongs, and this is the link to it.
  */
 export default function HUD() {
   const [active, setActive] = useState(-1);
@@ -63,12 +63,17 @@ export default function HUD() {
         )}
       </p>
 
+      {/* The one control, and the only way out of the reel. It is the reason the
+          reel can afford to be a reel: nobody is trapped in it. */}
       <Link
-        href="/"
-        onClick={() => rememberMode("tech")}
-        className="hud fixed top-4 right-4 z-52 flex min-h-11 items-center rounded-full border border-white/15 px-4 text-bone/70 transition-colors duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)] sm:top-5 sm:right-6"
+        href="/portfolio"
+        onClick={() => rememberMode("portfolio")}
+        className="hud fixed top-4 right-4 z-52 flex min-h-11 items-center gap-2 rounded-full border border-white/15 px-4 text-bone/70 transition-colors duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)] sm:top-5 sm:right-6"
       >
-        Switch to normal
+        Take me to the portfolio
+        <span aria-hidden className="text-[var(--accent)]">
+          →
+        </span>
       </Link>
     </>
   );

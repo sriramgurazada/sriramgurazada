@@ -65,13 +65,13 @@ export default function Hero() {
 
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <Link
-              href="/work"
+              href="/portfolio/work"
               className="inline-flex min-h-11 items-center rounded-full bg-route px-6 text-sm font-medium text-basalt transition-colors duration-200 hover:bg-ivory"
             >
               Explore my work
             </Link>
             <Link
-              href="/#about"
+              href="/portfolio#about"
               className="inline-flex min-h-11 items-center rounded-full border border-white/25 px-6 text-sm text-ivory transition-colors duration-200 hover:border-route hover:text-route"
             >
               About me

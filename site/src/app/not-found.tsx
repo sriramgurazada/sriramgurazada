@@ -17,16 +17,22 @@ export default function NotFound() {
 
         <div className="mt-10 flex flex-wrap gap-3">
           <Link
-            href="/"
+            href="/portfolio"
             className="inline-flex min-h-11 items-center rounded-full bg-route px-6 text-sm font-medium text-basalt transition-colors duration-200 hover:bg-ivory"
           >
-            Home
+            Portfolio
           </Link>
           <Link
-            href="/work"
+            href="/portfolio/work"
             className="inline-flex min-h-11 items-center rounded-full border border-white/25 px-6 text-sm text-ivory transition-colors duration-200 hover:border-route hover:text-route"
           >
             All work
+          </Link>
+          <Link
+            href="/"
+            className="inline-flex min-h-11 items-center rounded-full border border-white/25 px-6 text-sm text-ivory transition-colors duration-200 hover:border-route hover:text-route"
+          >
+            The reel
           </Link>
         </div>
       </div>

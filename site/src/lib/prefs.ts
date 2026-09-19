@@ -20,7 +20,12 @@ export const PAUSED_KEY = "horizon.paused";
 export const MODE_KEY = "horizon.mode";
 
 export type MotionPreference = "full" | "reduced";
-export type Mode = "tech" | "raw";
+/**
+ * `reel` is the landing page at `/`. `portfolio` is the readable site under
+ * `/portfolio`. Stored values from before this split do not match either name,
+ * so an old visitor simply gets the landing page, which is the right default.
+ */
+export type Mode = "reel" | "portfolio";
 
 /**
  * Runs before anything renders. Kept small and dependency-free because it ships
@@ -45,13 +50,15 @@ export const BOOT_SCRIPT = `(function(){
   d.dataset.hidden=document.visibilityState==="hidden"?"true":"false";
 })();`;
 
+export const RESTORED_KEY = "horizon.restored";
+
 /**
- * Restores a previously chosen raw mode, the way a site restores a theme.
+ * Sends a returning visitor who chose the portfolio straight to it, the way a
+ * site restores a theme.
  *
- * Only ever included on the home document, and only acts for a visitor who
- * explicitly chose raw mode before. A first-time visitor has no preference and
- * therefore always gets the default experience, which is also what a crawler
- * sees, since it never runs this.
+ * Only ever included on the landing document. A first-time visitor has no
+ * preference and so always gets the reel — which is also what a crawler sees,
+ * since it never runs this.
  *
  * Three guards, each earning its place:
  *  - a hash means the visitor followed a deep link into a specific section, so
@@ -61,12 +68,12 @@ export const BOOT_SCRIPT = `(function(){
  *  - the session flag makes a redirect loop impossible even if the preference
  *    and the destination ever disagree.
  */
-export const restoreModeScript = (rawHref: string) => `(function(){
+export const restoreModeScript = (portfolioHref: string) => `(function(){
   try{
     if(location.hash)return;
-    if(sessionStorage.getItem("horizon.restored"))return;
-    if(localStorage.getItem(${JSON.stringify(MODE_KEY)})!=="raw")return;
-    sessionStorage.setItem("horizon.restored","1");
-    location.replace(${JSON.stringify(rawHref)});
+    if(sessionStorage.getItem(${JSON.stringify(RESTORED_KEY)}))return;
+    if(localStorage.getItem(${JSON.stringify(MODE_KEY)})!=="portfolio")return;
+    sessionStorage.setItem(${JSON.stringify(RESTORED_KEY)},"1");
+    location.replace(${JSON.stringify(portfolioHref)});
   }catch(e){}
 })();`;
