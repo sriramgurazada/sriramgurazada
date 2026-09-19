@@ -5,7 +5,7 @@ import { useProgress } from "@react-three/drei";
 import { gsap } from "@/lib/gsap";
 import { lockScroll, unlockScroll } from "@/lib/lenis";
 import { markStageReady } from "@/lib/boot";
-import { identity } from "@/data/content";
+import { identity } from "@/data/raw";
 
 const MIN_DURATION = 1800; // Let the count actually read as a count.
 const MAX_DURATION = 12000; // Never trap the visitor behind a stalled texture.

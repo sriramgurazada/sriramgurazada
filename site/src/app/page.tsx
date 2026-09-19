@@ -1,41 +1,30 @@
-import dynamic from "next/dynamic";
-import SmoothScroll from "@/components/SmoothScroll";
-import FilmOverlay from "@/components/FilmOverlay";
-import SchematicFilter from "@/components/SchematicFilter";
-import HUD from "@/components/HUD";
-import Preloader from "@/components/Preloader";
-import Hero from "@/components/sections/Hero";
-import Chapter from "@/components/sections/Chapter";
-import FieldNotes from "@/components/sections/FieldNotes";
-import Record from "@/components/sections/Record";
-import Finale from "@/components/sections/Finale";
-import { chapters } from "@/data/content";
-
-// three.js has no business in the server bundle.
-const VFXCanvas = dynamic(() => import("@/components/vfx/VFXCanvas"));
+import SiteShell from "@/components/horizon/SiteShell";
+import Hero from "@/components/horizon/sections/Hero";
+import SelectedWork from "@/components/horizon/sections/SelectedWork";
+import FieldNotes from "@/components/horizon/sections/FieldNotes";
+import MyPath from "@/components/horizon/sections/MyPath";
+import NextHorizon from "@/components/horizon/sections/NextHorizon";
+import Contact from "@/components/horizon/sections/Contact";
+import { asset } from "@/lib/asset";
+import { restoreModeScript } from "@/lib/prefs";
 
 export default function Home() {
   return (
     <>
-      <VFXCanvas />
-      <SchematicFilter />
-      <FilmOverlay />
-      <HUD />
-      <Preloader />
+      {/* Only on this document: sends a visitor who previously chose raw mode
+          back to it, the way a site restores a theme. A first-time visitor has
+          no preference, so this does nothing — which is also what a crawler
+          sees, since it never runs. */}
+      <script dangerouslySetInnerHTML={{ __html: restoreModeScript(asset("/raw/")) }} />
 
-      <SmoothScroll />
-
-      <main data-stage className="relative z-10">
+      <SiteShell>
         <Hero />
-
-        {chapters.map((chapter, i) => (
-          <Chapter key={chapter.id} chapter={chapter} index={i} />
-        ))}
-
+        <SelectedWork />
         <FieldNotes />
-        <Record />
-        <Finale />
-      </main>
+        <MyPath />
+        <NextHorizon />
+        <Contact />
+      </SiteShell>
     </>
   );
 }

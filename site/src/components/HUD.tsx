@@ -1,12 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { scene } from "@/lib/scene";
-import { chapters } from "@/data/content";
+import { rememberMode } from "@/components/horizon/MotionProvider";
+import { chapters } from "@/data/raw";
 
 /**
- * A permanent readout of where you are in the reel: a progress rule down the
- * left edge and the chapter numerals down the right.
+ * Raw mode's only interface.
+ *
+ * Deliberately almost nothing: a progress rule down the left edge, the current
+ * chapter named at the top, and one way out. The chapter jump links this used to
+ * carry are gone — the whole point of a reel is that it plays, and a rail of
+ * shortcuts down the edge of the frame argues with that. The readable site is
+ * where navigation belongs.
  */
 export default function HUD() {
   const [active, setActive] = useState(-1);
@@ -25,11 +32,13 @@ export default function HUD() {
     return () => cancelAnimationFrame(frame);
   }, []);
 
+  const chapter = chapters[active];
+
   return (
     <>
       <div
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[52] hidden h-screen w-px bg-white/10 sm:block"
+        className="pointer-events-none fixed top-0 left-0 z-52 hidden h-screen w-px bg-white/10 sm:block"
       >
         <div
           ref={rule}
@@ -38,35 +47,29 @@ export default function HUD() {
         />
       </div>
 
-      <nav
-        aria-label="Chapters"
-        className="fixed right-4 top-1/2 z-[52] hidden -translate-y-1/2 flex-col gap-4 sm:flex"
+      {/* A readout, not a control. It reports where the reel is. */}
+      <p
+        aria-live="polite"
+        className="hud pointer-events-none fixed top-5 left-1/2 z-52 hidden -translate-x-1/2 whitespace-nowrap sm:block"
       >
-        {chapters.map((chapter, i) => (
-          <a
-            key={chapter.id}
-            href={`#${chapter.id}`}
-            className="group flex items-center justify-end gap-3"
-            title={chapter.title}
-          >
-            {/* Revealed on hover only. The chapter name is already set in the
-                header, and a permanent label here lands on top of the work
-                panel, which shares this edge of the frame. */}
-            <span
-              className={`hud whitespace-nowrap text-[0.55rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
-                active === i ? "text-[var(--accent)]" : ""
-              }`}
-            >
-              {chapter.title}
-            </span>
-            <span
-              className={`block h-px transition-all duration-500 ${
-                active === i ? "w-7 bg-[var(--accent)]" : "w-3 bg-white/30 group-hover:w-5"
-              }`}
-            />
-          </a>
-        ))}
-      </nav>
+        {chapter ? (
+          <>
+            <span className="text-[var(--accent)]">{chapter.numeral}</span>
+            <span className="mx-2 opacity-40">/</span>
+            {chapter.title}
+          </>
+        ) : (
+          "Prologue"
+        )}
+      </p>
+
+      <Link
+        href="/"
+        onClick={() => rememberMode("tech")}
+        className="hud fixed top-4 right-4 z-52 flex min-h-11 items-center rounded-full border border-white/15 px-4 text-bone/70 transition-colors duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)] sm:top-5 sm:right-6"
+      >
+        Switch to normal
+      </Link>
     </>
   );
 }

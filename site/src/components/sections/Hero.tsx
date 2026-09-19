@@ -5,7 +5,7 @@ import { gsap } from "@/lib/gsap";
 import { scene, setTheme } from "@/lib/scene";
 import { HERO_PLATE } from "@/lib/plates";
 import { onStageReady } from "@/lib/boot";
-import { identity, prologue, chapters } from "@/data/content";
+import { identity, prologue, chapters, rawSubtitle } from "@/data/raw";
 
 const TITLE = identity.titleCard.split("");
 
@@ -172,7 +172,7 @@ export default function Hero() {
             </h1>
 
             <span data-hero-sub className="hud text-[0.55rem] sm:text-[0.65rem]">
-              {identity.subtitle}
+              {rawSubtitle}
             </span>
           </div>
 

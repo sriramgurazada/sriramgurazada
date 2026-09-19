@@ -1,91 +1,133 @@
 @import "tailwindcss";
 
 @theme {
+  /* ---------- HORIZON ----------
+     The default system, used by every route except /raw. */
+  --color-basalt: #080d12;
+  --color-depth: #233844;
+  --color-ivory: #f3f0e8;
+  --color-muted: #a7b4bb;
+  /* The route. Also active states and primary text links. */
+  --color-route: #e8af65;
+  /* Fine contours and secondary diagram lines. */
+  --color-contour: #8cabb0;
+
+  /* ---------- Raw mode ----------
+     Only /raw uses these. */
   --color-ink: #040404;
   --color-ink-soft: #0b0a09;
   --color-ash: #8b8377;
   --color-bone: #ece5da;
   --color-ember: #ff5f1f;
   --color-gold: #d4a23c;
-  --color-blood: #8f1d14;
 
   --font-display: var(--font-cinzel), serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-mono-hud), ui-monospace, monospace;
+
+  /* Fluid type. Each clamp spans the doc's phone-to-desktop range, so the
+     size is never outside it and never needs a breakpoint to change. */
+  --text-hero: clamp(2.875rem, 7.2vw, 8.25rem);
+  --text-hero--line-height: 0.94;
+  --text-chapter: clamp(2rem, 3.6vw, 4rem);
+  --text-chapter--line-height: 1.04;
+  --text-title: clamp(1.5rem, 2vw, 2.25rem);
+  --text-title--line-height: 1.12;
+  --text-lede: clamp(1.125rem, 1vw + 0.8rem, 1.5rem);
+  --text-lede--line-height: 1.45;
+  --text-prose: clamp(1rem, 0.35vw + 0.9rem, 1.25rem);
+  --text-prose--line-height: 1.55;
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.4;
 }
 
 :root {
-  /* Updated per-chapter by ScrollTrigger so DOM accents track the WebGL grade. */
-  --accent: #ff5f1f;
   color-scheme: dark;
+  /* Raw mode rewrites this per chapter. */
+  --accent: var(--color-route);
 }
 
 * {
   box-sizing: border-box;
 }
 
-html {
-  /* Lenis drives scrolling; native smooth behaviour fights it. */
-  scroll-behavior: auto;
-}
-
 html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--color-ink);
-  color: var(--color-bone);
+  background: var(--color-basalt);
+  color: var(--color-ivory);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overscroll-behavior-y: none;
 }
 
 body {
-  /* Prevents a horizontal scrollbar from wide title-card typography. */
+  /* Wide title typography must never produce a horizontal scrollbar. */
   overflow-x: clip;
 }
 
 ::selection {
-  background: var(--accent);
-  color: #040404;
+  background: var(--color-route);
+  color: var(--color-basalt);
 }
 
-/* Lenis */
-html.lenis,
-html.lenis body {
-  height: auto;
+/* A focus ring that is visible over both a dark surface and a photograph. */
+:focus-visible {
+  outline: 2px solid var(--color-route);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
+/* ---------- Layout primitives ---------- */
+
+@utility shell {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  /* Outer margins: 20px at 360, then 24 / 32 / 64. */
+  padding-inline: 1.25rem;
+
+  @media (min-width: 400px) {
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 1024px) {
+    padding-inline: 4rem;
+  }
 }
 
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-/* Hide the scrollbar without losing scrollability — the HUD reports position instead. */
-body::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-
-body {
-  scrollbar-width: none;
+/* A reading column. Long-form text never spans the full 1600px shell. */
+@utility reading {
+  max-width: 45rem;
 }
 
 @utility text-balance {
   text-wrap: balance;
 }
 
-/* ---------- Cinematic primitives ----------
-   These live in the components layer so per-element Tailwind utilities
-   (text sizes, colours, tracking) still win where a element needs to
-   depart from the house style. */
+@utility text-pretty {
+  text-wrap: pretty;
+}
 
 @layer components {
-  /* Wide, sparse, engraved-looking title type. */
+  /* Small technical label. Used for chapter numbers, categories and statuses. */
+  .label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* The one fine amber line that ties the site together. */
+  .route-line {
+    background: var(--color-route);
+  }
+
+  /* ---------- Raw mode primitives ---------- */
+
   .title-epic {
     font-family: var(--font-display);
     font-weight: 700;
@@ -94,9 +136,6 @@ body {
     text-transform: uppercase;
   }
 
-  /* Small technical stamps, mirroring on-screen production titles. The wide
-     tracking is what sells them, but at phone widths it is also what pushes
-     a two-item header row into a collision, so it eases off below sm. */
   .hud {
     font-family: var(--font-mono);
     font-size: 0.5625rem;
@@ -112,7 +151,6 @@ body {
     }
   }
 
-  /* Brushed-metal fill used on the main title card. */
   .metal {
     background: linear-gradient(
       180deg,
@@ -127,6 +165,45 @@ body {
     background-clip: text;
     color: transparent;
   }
+}
+
+/* ---------- Raw mode page shell ----------
+   Scoped by presence rather than by a class on <body>, because <body> belongs
+   to the root layout and cannot be varied per route in a static export. */
+
+html:has([data-raw-root]) {
+  background: var(--color-ink);
+  /* Lenis drives scrolling in raw mode; native smooth behaviour fights it. */
+  scroll-behavior: auto;
+  overscroll-behavior-y: none;
+  scrollbar-width: none;
+}
+
+html:has([data-raw-root]) body {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  overscroll-behavior-y: none;
+  scrollbar-width: none;
+}
+
+/* Raw mode reports position through its own readout instead. */
+html:has([data-raw-root]) body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 .grain {
@@ -169,8 +246,140 @@ body {
   );
 }
 
+/* ---------- Ambient motion ----------
+   Decorative motion opts in by marking itself [data-ambient], and is then
+   governed entirely from here rather than by each effect remembering to check.
+
+   The default is paused. That single line is what makes a frame with no
+   JavaScript, a frame that has scrolled away, and a frame during the first
+   paint all behave identically: as the still photograph they are built on.
+
+   An effect runs only when every one of these agrees:
+     · the frame scheduler has chosen it as the one active frame
+     · the tab is visible
+     · motion preference is Full
+     · the Pause control is off
+     · no photo viewer is open */
+
+[data-ambient] {
+  animation-play-state: paused;
+}
+
+[data-living-frame][data-active="true"] [data-ambient] {
+  animation-play-state: running;
+}
+
+html[data-paused="true"] [data-ambient],
+html[data-hidden="true"] [data-ambient],
+html[data-viewer="open"] [data-ambient] {
+  animation-play-state: paused !important;
+}
+
+/* Reduced goes further than paused: no loop exists at all, and the static
+   composition is what remains. */
+html[data-motion="reduced"] [data-ambient] {
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+html[data-motion="reduced"] .grain {
+  animation: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .grain {
     animation: none;
+  }
+}
+
+/* ---------- The signature transformation ----------
+   The hero is one sticky stage inside a taller section. The extra height is
+   the scroll travel the transformation is scrubbed against, so granting or
+   withholding that height is the whole eligibility decision — and it is made in
+   CSS, which means it is right on the first paint and needs no script.
+
+   Phones get no travel at all. Neither does a visitor who has asked for reduced
+   motion, whether through the operating system or the control in the header,
+   because 140vh of scrolling that does nothing is worse than no effect. */
+
+[data-hero] {
+  min-height: 100svh;
+}
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  [data-hero] {
+    /* One viewport to read, then the 140vh of travel the design allows. */
+    min-height: 240svh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-hero] {
+    min-height: 100svh;
+  }
+}
+
+html[data-motion="reduced"] [data-hero] {
+  min-height: 100svh;
+}
+
+/* ---------- Mist over the composite study ----------
+   A soft layer added above the photograph rather than a displacement of it, so
+   the ridges, the arch, the cables and the route cannot move. Two bands at
+   different sizes, speeds and phases, because one band reads as a single object
+   sliding and two read as air. */
+
+.mist-band {
+  position: absolute;
+  /* Wider than the frame so a band's own soft edge never drifts into view. */
+  left: -14%;
+  right: -14%;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+
+.mist-band--low {
+  top: 56%;
+  height: 28%;
+  background: radial-gradient(
+    58% 100% at 42% 50%,
+    rgba(140, 171, 176, 0.32),
+    rgba(140, 171, 176, 0) 72%
+  );
+  animation: mist-low 11s ease-in-out infinite alternate;
+}
+
+.mist-band--high {
+  top: 64%;
+  height: 20%;
+  background: radial-gradient(
+    68% 100% at 64% 50%,
+    rgba(198, 212, 214, 0.22),
+    rgba(198, 212, 214, 0) 74%
+  );
+  animation: mist-high 9s ease-in-out infinite alternate;
+}
+
+/* Around 10px of travel and a few points of opacity. Any more and it stops
+   being mist sitting on a lake and starts being a shape crossing a photo. */
+@keyframes mist-low {
+  from {
+    transform: translate3d(-5px, 1px, 0);
+    opacity: 0.82;
+  }
+  to {
+    transform: translate3d(5px, -2px, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes mist-high {
+  from {
+    transform: translate3d(4px, 0, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(-6px, -2px, 0);
+    opacity: 0.78;
   }
 }

@@ -1,11 +1,12 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import Image from "next/image";
+import Photo from "@/components/Photo";
 import { gsap } from "@/lib/gsap";
 import { scene } from "@/lib/scene";
-import { asset } from "@/lib/asset";
-import { aboutCopy, capabilities, identity, portraits, record } from "@/data/content";
+import { photos } from "@/data/photos";
+import { capabilities, identity, path } from "@/data/identity";
+import { aboutCopy } from "@/data/raw";
 
 export default function Record() {
   const root = useRef<HTMLElement>(null);
@@ -72,12 +73,11 @@ export default function Record() {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div data-record-reveal className="lg:col-span-5">
             <div className="relative aspect-[3/4] overflow-hidden rounded-sm border border-white/10">
-              <Image
-                src={asset(portraits.headshot)}
-                alt={identity.shortName}
-                fill
+              <Photo
+                slug="headshot"
+                alt={photos.headshot.alt}
                 sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover"
+                className="absolute inset-0 h-full w-full object-cover"
               />
               <div
                 aria-hidden
@@ -127,9 +127,9 @@ export default function Record() {
 
         {/* Timeline */}
         <div className="mt-24 border-t border-white/10">
-          {record.map((entry) => (
+          {path.map((entry) => (
             <div
-              key={entry.year}
+              key={`${entry.year}-${entry.place}`}
               data-record-row
               className="grid grid-cols-12 items-center gap-4 border-b border-white/10 py-6"
             >
@@ -141,12 +141,11 @@ export default function Record() {
               <div className="col-span-12 sm:col-span-2">
                 {entry.photo && (
                   <div className="relative ml-auto h-16 w-16 overflow-hidden rounded-sm border border-white/10 grayscale transition-all duration-700 hover:grayscale-0">
-                    <Image
-                      src={asset(entry.photo)}
-                      alt={entry.place}
-                      fill
+                    <Photo
+                      slug={entry.photo}
+                      alt={photos[entry.photo].alt}
                       sizes="64px"
-                      className="object-cover"
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                   </div>
                 )}
