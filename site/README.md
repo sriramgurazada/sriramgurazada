@@ -135,6 +135,13 @@ Temporal Nexus — are accurate as far as they go but have not been read back by
 the person they are about. Photographs with `located: false` in `data/photos.ts`
 carry a descriptive working place rather than a confirmed one.
 
+**USC year is unconfirmed.** Public copy still says 2025. The degree may have
+been completed in December 2024. Do not change the year until that is settled.
+
+**MCP work is a teaser, not a case.** `nowBuilding` in `identity.ts` needs two
+facts before it can grow: what the layer connects to, and which workflows the
+skills currently support.
+
 **No résumé link.** `contact.resume` is null, so no résumé button renders rather
 than a dead one.
 

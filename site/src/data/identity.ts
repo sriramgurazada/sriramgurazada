@@ -39,63 +39,33 @@ export const hero = {
 };
 
 /**
- * Chapter 03. How a question becomes a defensible answer.
+ * Chapter 03. A short, general way of working.
  *
- * This replaced a year-by-year timeline, which said where the owner had been
- * without saying what he does. These are the stages that actually recur across
- * the retrieval and agent work, described generically: no employer's
- * architecture is being disclosed by writing down that retrieval comes before
- * reasoning.
- *
- * `detail` is the line that earns the stage its place — a specific failure it
- * exists to prevent, rather than a restatement of its own name.
+ * Three stages, on purpose. The longer implementation language belongs on the
+ * project pages that actually use it, not on the homepage.
  */
 export const pipeline = {
-  heading: "How a question becomes an answer.",
+  heading: "How it runs.",
   standfirst:
-    "The same six stages keep showing up, whether the thing being built is a search box or an agent. Most of the engineering is in the last two.",
+    "A general way of working. Not a claim that every project uses the same architecture.",
   stages: [
     {
-      id: "ingest",
-      name: "Ingest",
-      role: "Documents arrive",
-      detail:
-        "Permissions are attached here, at the door. Anything that treats access as a filter applied later has already retrieved something it should not have.",
+      id: "find",
+      name: "Find",
+      role: "Find information",
+      detail: "Get the right material in front of you before you act on it.",
     },
     {
-      id: "retrieve",
-      name: "Retrieve",
-      role: "Millions become a handful",
-      detail:
-        "Lexical and semantic matching fail on different questions, so both run and their disagreement is treated as information rather than noise.",
+      id: "act",
+      name: "Act",
+      role: "Take action",
+      detail: "Do the work that information actually supports.",
     },
     {
-      id: "ground",
-      name: "Ground",
-      role: "Every claim keeps its source",
-      detail:
-        "A figure that cannot be traced back to the document it came from is not a weaker answer. It is an unusable one.",
-    },
-    {
-      id: "reason",
-      name: "Reason",
-      role: "The agent plans and calls tools",
-      detail:
-        "Decomposed into steps that can each be inspected, because one opaque call returning a confident paragraph cannot be debugged or defended.",
-    },
-    {
-      id: "verify",
-      name: "Verify",
-      role: "Check before it ships",
-      detail:
-        "Held against an evaluation set written to catch the failures nobody thought of, since the cases you invent yourself will flatter you.",
-    },
-    {
-      id: "observe",
-      name: "Observe",
-      role: "Watch it in production",
-      detail:
-        "Retrieval quality drifts as the corpus moves underneath it. Without this stage you find out from a user, months late.",
+      id: "check",
+      name: "Check",
+      role: "Check results",
+      detail: "See whether it did what it was supposed to.",
     },
   ],
 };
@@ -105,9 +75,10 @@ export const about = {
   /** Kept short on purpose. The work pages carry the detail. */
   body: [
     "I am a software engineer in Dallas. I work on shareholder analytics and enterprise search at Goldman Sachs — questions about who owns a company, and the problem of making a very large organisation's own documents findable by the people already allowed to read them.",
-    "Before that I spent several years on federated identity, which is the unglamorous business of making sure a thousand applications all agree about who you are. It teaches you to care about the failure modes first.",
+    "Before that I spent several years on identity and access management: single sign-on and multi-factor authentication across 200 applications, as one engineer on a team.",
+    // TODO: confirm the USC year. Public copy still says 2025; the degree may have been completed in December 2024.
     "I studied computer science at USC and finished in 2025. Before that I was in India, publishing research on computer vision and on health records that cannot be quietly edited.",
-    "The photographs are from the same years. I notice structure — cables, contours, grids, flow — which turns out to be the same instinct that makes the engineering work.",
+    "The photographs are from the same years.",
   ],
 };
 
@@ -143,7 +114,7 @@ export const portraits = [
  */
 export const nextHorizon = {
   heading: "Next horizon.",
-  standfirst: "Three things I want to keep working on. Interests, not credentials.",
+  standfirst: "Three things I want to keep working on.",
   interests: [
     {
       title: "Search and retrieval",
@@ -162,24 +133,38 @@ export const nextHorizon = {
 
 export const capabilities = [
   {
-    group: "Search & AI",
-    items: ["Retrieval", "RAG", "Evaluation", "PyTorch", "Transformers", "LangChain", "FAISS", "spaCy"],
+    group: "AI & Search",
+    items: ["Retrieval", "RAG", "Evaluation", "PyTorch", "Transformers", "LangChain", "FAISS"],
   },
   {
-    group: "Identity & access",
-    items: ["PingFederate", "Azure AD", "Okta", "CyberArk", "SAML", "OIDC", "OAuth", "MFA"],
-  },
-  {
-    group: "Languages",
+    group: "Software Development",
     items: ["Python", "Java", "TypeScript", "JavaScript", "SQL", "GraphQL", "C", "C#"],
   },
   {
-    group: "Platform",
+    group: "Cloud & Tools",
     items: ["AWS", "Docker", "Kubernetes", "Jenkins", "MongoDB", "Splunk", "Grafana", "Node.js"],
+  },
+  {
+    group: "Identity & Access",
+    items: ["PingFederate", "Azure AD", "SAML", "OIDC", "OAuth", "MFA"],
   },
 ];
 
+/**
+ * Homepage and work-index teaser. Not a case study: it is one related area
+ * still being built, not three finished products.
+ *
+ * TODO: what the MCP layer connects to, and which workflows the skills and
+ * dynamic workflows currently support.
+ */
+export const nowBuilding = {
+  title: "MCP, skills and dynamic workflows",
+  category: "Applied AI",
+  status: "Currently building",
+  summary: "I’m working with my team on an MCP layer, reusable skills and dynamic workflows for AI tools.",
+};
+
 export const contactSection = {
-  heading: "Have a problem worth building for?",
-  standfirst: "Let’s talk. I read everything that arrives, and I answer the ones that are about the work.",
+  heading: "Have a project or idea in mind?",
+  standfirst: "I’d love to hear about it.",
 };
