@@ -4,16 +4,11 @@ import { art } from "@/data/artwork";
 import { pipeline } from "@/data/identity";
 
 /**
- * Chapter 03. The six stages a question passes through.
- *
- * This is the section that replaced a year-by-year timeline. A timeline said
- * where the work happened; this says what the work is, which is the thing a
- * visitor came to find out.
+ * Chapter 03. Three stages, kept short.
  *
  * It is an ordered list, and it is the list that carries the meaning. The
  * connecting rule, the nodes and the illustration behind them are all decorative
- * and all hidden from assistive technology: read with a screen reader or with
- * images off, this is still six numbered stages in the right order.
+ * and all hidden from assistive technology.
  */
 export default function Pipeline() {
   return (
@@ -40,9 +35,6 @@ export default function Pipeline() {
           standfirst={pipeline.standfirst}
         />
 
-        {/* Two rows of three on desktop, one column on a phone. The rule runs
-            through the node row of each grid line rather than around the cards,
-            so the stages read as one route with waypoints on it. */}
         <ol className="relative mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {pipeline.stages.map((stage, index) => (
             <li key={stage.id} className="group relative">
@@ -64,7 +56,7 @@ export default function Pipeline() {
                 >
                   {/* The halo. It breathes only under a full-motion preference
                       with Pause off; see globals.css. The negative delay starts
-                      each one part-way through the loop so the six do not pulse
+                      each one part-way through the loop so the three do not pulse
                       in unison. */}
                   <span
                     data-node-halo

@@ -45,7 +45,7 @@ export const photos = {
   "redwood-road": {
     slug: "redwood-road",
     label: "Depth",
-    caption: "A vanishing point you can actually drive into.",
+    caption: "A road through the redwoods.",
     alt:
       "A two-lane road curving away between very tall redwoods, with pale daylight " +
       "breaking through the canopy at the far end of the tunnel of trees.",
@@ -56,7 +56,7 @@ export const photos = {
   "emerald-lake": {
     slug: "emerald-lake",
     label: "Contour",
-    caption: "Every ridge here is a load path that happened to win.",
+    caption: "A frozen alpine lake.",
     alt:
       "A snow-covered cirque of grey rock rising steeply above a dark, partly frozen " +
       "alpine lake under flat cloud.",
@@ -89,7 +89,7 @@ export const photos = {
   "dallas-bridge": {
     slug: "dallas-bridge",
     label: "Connections",
-    caption: "Cables, fanned out. The same curve solved sixty times over.",
+    caption: "The bridge at night.",
     alt:
       "The lit arch and fanned cables of a cable-stayed bridge at night, with a city " +
       "skyline and a full moon behind it.",
@@ -100,7 +100,7 @@ export const photos = {
   "wing-city-lights": {
     slug: "wing-city-lights",
     label: "Grid",
-    caption: "Every city is a graph, if you get far enough above it.",
+    caption: "City lights from the air.",
     alt:
       "A city's street grid glowing orange at night, seen from an aircraft window past " +
       "a red wingtip.",
@@ -208,7 +208,7 @@ export const photos = {
   "la-skyline": {
     slug: "la-skyline",
     label: "Downtown",
-    caption: "Two million decisions, lit from the inside.",
+    caption: "Downtown at night.",
     alt: "The downtown Los Angeles skyline at night, its towers lit against a black sky.",
     place: "Los Angeles, California",
     located: false,
@@ -228,7 +228,7 @@ export const photos = {
   "golden-gate": {
     slug: "golden-gate",
     label: "Suspension",
-    caption: "The cables are doing all the work and none of the talking.",
+    caption: "The Golden Gate at dusk.",
     alt:
       "The Golden Gate Bridge at dusk, seen from the eastern side with the headlands " +
       "and the bay behind it.",
@@ -250,7 +250,7 @@ export const photos = {
   "antelope-canyon": {
     slug: "antelope-canyon",
     label: "Strata",
-    caption: "Time, stored as layers, readable by anyone who stops to look.",
+    caption: "Sandstone walls in a slot canyon.",
     alt:
       "Curved orange sandstone walls inside a slot canyon, with a bright opening of sky " +
       "above the layered rock.",

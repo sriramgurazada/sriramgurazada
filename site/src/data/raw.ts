@@ -65,51 +65,8 @@ export const prologue = {
 
 export const chapters: Chapter[] = [
   {
-    id: "the-gate",
-    numeral: "I",
-    stamp: "THE ENTERPRISE PERIMETER",
-    title: "The Gate",
-    era: "IDENTITY & ACCESS",
-    logline:
-      "A thousand doors, one keeper. Federated identity at the scale where a single misconfiguration becomes a breach.",
-    theme: { ember: [1.0, 0.37, 0.12], mist: [0.22, 0.09, 0.04], accent: "#ff5f1f" },
-    plate: "golden-gate",
-    plateNote: "Suspension cables → the geometry of a trusted handshake",
-    works: [
-      {
-        title: "Federation at a Thousand Applications",
-        role: "IAM Engineering",
-        body: "Integrated over a thousand applications across SAML, OIDC and PKCE flows, delivering single sign-on and multi-factor authentication for workforce and customer identity.",
-        stack: ["PingFederate", "Azure AD", "SAML", "OIDC", "PKCE"],
-      },
-      {
-        title: "Secrets That Rotate Themselves",
-        role: "Automation",
-        body: "Credential rotation automated end to end, with integrations moved to retrieving secrets dynamically over LDAP, JDBC and REST rather than holding a copy of them.",
-        stack: ["CyberArk", "LDAP", "JDBC", "REST"],
-      },
-      {
-        title: "Certificate Renewal Pipeline",
-        role: "Reliability",
-        body: "Signing certificates have a known lifetime, so renewal became a pipeline that runs before the date instead of an alert that fires after it. One recurring class of outage, removed from every federated integration at once.",
-        stack: ["PingFederate", "Jenkins", "Python"],
-      },
-      {
-        title: "Observability for Identity",
-        role: "Monitoring",
-        body: "Authentication flows instrumented so that failed logins, latency and policy regressions surface on a dashboard rather than in a support queue.",
-        stack: ["Splunk", "Grafana", "Docker"],
-      },
-    ],
-    credits: [
-      { label: "Applications Onboarded", value: "1000+" },
-      { label: "Platforms", value: "Ping · Azure · CyberArk · Okta" },
-      { label: "Class of Outage Removed", value: "Certificate Expiry" },
-    ],
-  },
-  {
     id: "the-oracle",
-    numeral: "II",
+    numeral: "I",
     stamp: "THE RETRIEVAL LAYER",
     title: "The Oracle",
     era: "SEARCH & APPLIED AI",
@@ -122,8 +79,20 @@ export const chapters: Chapter[] = [
       {
         title: "Enterprise Search",
         role: "Goldman Sachs",
-        body: "Making a very large firm's own documents findable by the people already allowed to read them. Internal work, so the shape of the problem is the part that can be described: a dozen systems that disagree about structure, permissions that belong inside retrieval rather than after it, and queries that arrive as questions.",
+        body: "Making a very large firm's own documents findable by the people already allowed to read them.",
         stack: ["Retrieval", "Evaluation", "Python"],
+      },
+      {
+        title: "Shareholder Analytics",
+        role: "Goldman Sachs",
+        body: "Answering questions about who owns a company, from filings and market data, with the evidence attached to every answer.",
+        stack: ["Agents", "Retrieval", "Evaluation"],
+      },
+      {
+        title: "MCP, skills and dynamic workflows",
+        role: "Currently building",
+        body: "I’m working with my team on an MCP layer, reusable skills and dynamic workflows for AI tools.",
+        stack: ["MCP", "Skills", "Workflows"],
       },
       {
         title: "Retrieval That Knows Its Limits",
@@ -160,6 +129,43 @@ export const chapters: Chapter[] = [
       { label: "Now Working On", value: "Enterprise Search" },
       { label: "Retrieval", value: "Dense + Lexical" },
       { label: "Discipline", value: "Measure Before Tuning" },
+    ],
+  },
+  {
+    id: "the-gate",
+    numeral: "II",
+    stamp: "THE ENTERPRISE PERIMETER",
+    title: "The Gate",
+    era: "IDENTITY & ACCESS",
+    logline:
+      "Worked on single sign-on and multi-factor authentication across 200 applications.",
+    theme: { ember: [1.0, 0.37, 0.12], mist: [0.22, 0.09, 0.04], accent: "#ff5f1f" },
+    plate: "golden-gate",
+    plateNote: "Suspension cables → the geometry of a trusted handshake",
+    works: [
+      {
+        title: "Identity and access management",
+        role: "IAM Engineering",
+        body: "Worked on single sign-on and multi-factor authentication across 200 applications, as one engineer on a team. The count is the team's, not mine alone.",
+        stack: ["PingFederate", "Azure AD", "SAML", "OIDC", "PKCE"],
+      },
+      {
+        title: "Certificate Renewal Pipeline",
+        role: "Reliability",
+        body: "Signing certificates have a known lifetime, so renewal became a pipeline that runs before the date instead of an alert that fires after it. One recurring class of outage, removed from every federated integration at once.",
+        stack: ["PingFederate", "Jenkins", "Python"],
+      },
+      {
+        title: "Observability for Identity",
+        role: "Monitoring",
+        body: "Authentication flows instrumented so that failed logins, latency and policy regressions surface on a dashboard rather than in a support queue.",
+        stack: ["Splunk", "Grafana", "Docker"],
+      },
+    ],
+    credits: [
+      { label: "Applications", value: "200" },
+      { label: "Platforms", value: "Ping · Azure" },
+      { label: "Class of Outage Removed", value: "Certificate Expiry" },
     ],
   },
   {
@@ -208,7 +214,7 @@ export const chapters: Chapter[] = [
   {
     id: "the-forge",
     numeral: "IV",
-    stamp: "WORLDS BUILT FROM NOTHING",
+    stamp: "PROJECTS AND EXPERIMENTS",
     title: "The Forge",
     era: "PRODUCT & PLAY",
     logline:
@@ -220,7 +226,7 @@ export const chapters: Chapter[] = [
       {
         title: "Warranty Wala",
         role: "In Development",
-        body: "The thing being built outside work: product warranties, and the paperwork that comes with them. Not released, so deliberately described in one sentence rather than three vague ones.",
+        body: "The thing being built outside work: product warranties, and the paperwork that comes with them.",
         stack: ["Product", "Side Project"],
       },
       {
@@ -260,8 +266,7 @@ export const chapters: Chapter[] = [
     stamp: "DALLAS · PRESENT DAY",
     title: "The Ascent",
     era: "2026 CE",
-    logline:
-      "A master's finished at USC, a move east, and search at a scale where the corpus argues back.",
+    logline: "Working on search tools at Goldman Sachs in Dallas.",
     theme: { ember: [0.75, 0.85, 1.0], mist: [0.08, 0.11, 0.18], accent: "#c9d8f0" },
     plate: "emerald-lake",
     plateNote: "Treeline and ice → altitude that only arrives slowly",
@@ -336,6 +341,6 @@ export const fieldNotesIntro = {
 
 export const aboutCopy = [
   "I build the parts of a system that people only notice when they fail — the login that has to work at 3am, the retrieval that has to admit when the corpus cannot answer, the certificate that cannot be allowed to expire.",
-  "That started in India with research papers and a blockchain for health records, ran through several years of federated identity at enterprise scale, went through a master's at USC, and continues now in Dallas on search.",
-  "The photographs are from the same years. I tend to notice structure — cables, strata, grids, flow — which turns out to be the same instinct that makes the engineering work.",
+  "That started in India with research papers and a blockchain for health records, ran through several years of identity and access management, went through a master's at USC, and continues now in Dallas on search.",
+  "The photographs are from the same years.",
 ];

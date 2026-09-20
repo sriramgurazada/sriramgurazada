@@ -139,11 +139,9 @@ export default async function CaseStudy(props: PageProps<"/portfolio/work/[slug]
           <Link href="/portfolio#contact" className="group bg-basalt p-7 sm:p-9">
             <p className="label">Contact</p>
             <p className="mt-3 text-title font-semibold tracking-tight transition-colors duration-200 group-hover:text-route">
-              Have a problem worth building for?
+              Have a project or idea in mind?
             </p>
-            <p className="mt-2 max-w-[40ch] text-muted text-pretty">
-              Then it is worth an email. Let’s talk.
-            </p>
+            <p className="mt-2 max-w-[40ch] text-muted text-pretty">I’d love to hear about it.</p>
           </Link>
         </nav>
       </article>

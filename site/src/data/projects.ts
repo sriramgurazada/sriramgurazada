@@ -32,7 +32,7 @@ export type Project = {
   summary: string;
   /** Two or three words, for the index rows. */
   tags: string[];
-  /** Shown on the home page as one of the selected three. */
+  /** Shown on the home page as a selected case. */
   featured?: boolean;
   sections: Section[];
   /** What can be shown. Empty means nothing public exists. */
@@ -70,12 +70,6 @@ export const projects: Project[] = [
         ],
       },
       {
-        heading: "What this page is",
-        body: [
-          "This is internal work on a regulated desk, so what follows is the shape of the problem and the principles I work by. No implementation, no architecture, no numbers, no screenshots.",
-        ],
-      },
-      {
         heading: "How I think about it",
         points: [
           {
@@ -103,14 +97,9 @@ export const projects: Project[] = [
         ],
       },
     ],
-    withheld:
-      "Internal work on a regulated desk. No screenshots, metrics or architecture can be published, so this case is written as context rather than as evidence.",
-    limitations: [
-      "Nothing here can be independently verified from outside the firm. Read it as how I work, not as a portfolio artefact.",
-    ],
+    withheld: "Internal work. Details stay inside the firm.",
     confirmed: false,
   },
-
   {
     slug: "enterprise-search",
     title: "Enterprise search",
@@ -128,12 +117,6 @@ export const projects: Project[] = [
         body: [
           "Past a certain size, the hard part of search stops being ranking. The documents live in a dozen systems that disagree about structure, a good fraction of them change every day, and every result has to respect who is allowed to see what. Meanwhile the queries arriving are questions, not keywords.",
           "None of those are search problems in the textbook sense. They are the reason enterprise search has a reputation.",
-        ],
-      },
-      {
-        heading: "What this page is",
-        body: [
-          "This is internal work, so what follows is the shape of the problem and the principles I work by. The implementation, the metrics and the architecture stay inside the firm.",
         ],
       },
       {
@@ -164,14 +147,9 @@ export const projects: Project[] = [
         ],
       },
     ],
-    withheld:
-      "Internal work. No screenshots, metrics or architecture can be published, so this case is written as context rather than as evidence.",
-    limitations: [
-      "Nothing here can be independently verified from outside the firm. Read it as how I work, not as a portfolio artefact.",
-    ],
+    withheld: "Internal work. Details stay inside the firm.",
     confirmed: false,
   },
-
   {
     slug: "warranty-wala",
     title: "Warranty Wala",
@@ -181,7 +159,6 @@ export const projects: Project[] = [
     role: "Building it",
     summary: "A side project about product warranties, and the paperwork that comes with them.",
     tags: ["Product", "Side project"],
-    featured: true,
     sections: [
       {
         heading: "What it is",
@@ -189,72 +166,10 @@ export const projects: Project[] = [
           "Warranty Wala is the thing I am building outside work. It is about product warranties — the receipts, the dates, the coverage, and the reliable fact that the one you need is the one you cannot find.",
         ],
       },
-      {
-        heading: "Why this page is short",
-        body: [
-          "Because it is not out yet. I would rather describe it properly once than describe it vaguely three times, so there is deliberately nothing to click here.",
-          "When there is something to use, this page becomes a real write-up.",
-        ],
-      },
     ],
-    withheld: "In development. The write-up stays thin on purpose until there is something to show.",
-    limitations: ["No public build, repository or screenshots yet."],
-    next: ["A proper write-up and a link, once it ships."],
+    withheld: "In development.",
     confirmed: false,
   },
-
-  {
-    slug: "federated-identity",
-    title: "Identity at enterprise scale",
-    category: "Platform engineering",
-    status: "Shipped",
-    dates: "2021 — 2024",
-    role: "Identity and access engineer",
-    summary:
-      "Single sign-on and multi-factor authentication across more than a thousand applications, where one misconfiguration is a breach.",
-    tags: ["SAML", "OIDC", "Automation"],
-    sections: [
-      {
-        heading: "The problem",
-        body: [
-          "A large organisation accumulates applications faster than it can standardise them, and each one arrives wanting to handle its own logins. Every place that happens is a place credentials can leak. The job is to take that responsibility away from all of them without stopping any of them working.",
-        ],
-      },
-      {
-        heading: "Scale",
-        body: [
-          "Over a thousand applications federated onto a central identity provider across SAML, OIDC and PKCE flows, covering both workforce and customer sign-in.",
-        ],
-      },
-      {
-        heading: "Decisions worth keeping",
-        points: [
-          {
-            title: "Certificate expiry is a calendar entry, not an incident",
-            body: "Signing certificates have a known lifetime. Renewal was built as a pipeline that runs before the date instead of an alert that fires after it, which removed a whole recurring class of outage from every federated integration at once.",
-          },
-          {
-            title: "Nothing holds its own copy of a secret",
-            body: "Credential rotation was automated end to end, and integrations were moved to retrieving secrets dynamically over LDAP, JDBC and REST rather than storing them.",
-          },
-          {
-            title: "Instrument the login, not just the server",
-            body: "Failed sign-ins, authentication latency and policy regressions went onto dashboards, because an identity problem reaches a user long before it shows up in a server metric.",
-          },
-        ],
-      },
-      {
-        heading: "Worked with",
-        body: ["PingFederate, Azure AD, Okta, CyberArk, Splunk, Grafana, Jenkins, Python and Docker."],
-      },
-    ],
-    limitations: [
-      "Enterprise work: the configuration, dashboards and incident history are not mine to publish.",
-      "The scale figure is the count of applications onboarded by the team I worked in, not by me alone.",
-    ],
-    confirmed: true,
-  },
-
   {
     slug: "retrieval-limits",
     title: "Retrieval that knows its limits",
@@ -296,7 +211,6 @@ export const projects: Project[] = [
     ],
     confirmed: true,
   },
-
   {
     slug: "pii-masking",
     title: "Finding personal data before it lands",
@@ -335,7 +249,107 @@ export const projects: Project[] = [
     ],
     confirmed: true,
   },
-
+  {
+    slug: "travel-agent",
+    title: "A travel planner that shows its reasoning",
+    category: "Agents",
+    status: "Prototype",
+    dates: "2024",
+    role: "Personal project",
+    summary:
+      "A tool-using agent that turns a loose travel brief into a day-by-day itinerary it can defend.",
+    tags: ["LangChain", "Agents", "Python"],
+    sections: [
+      {
+        heading: "Why",
+        body: [
+          "I travel enough to have noticed that planning a trip is a constraint-satisfaction problem in a trench coat. Dates, budget, opening hours, and how far you are willing to drive before it stops being a holiday.",
+        ],
+      },
+      {
+        heading: "How",
+        body: [
+          "The agent decomposes the brief into those constraints, queries live sources for each, and assembles a plan day by day.",
+          "The part worth building was not the itinerary. It was making the agent state which constraint each choice was serving, so that a bad plan can be argued with instead of merely regenerated.",
+        ],
+      },
+    ],
+    links: [{ label: "Repository", href: "https://github.com/sriramgurazada/Travel_Agent" }],
+    limitations: ["A prototype. It has not been used by anybody but me."],
+    confirmed: true,
+  },
+  {
+    slug: "temporal-nexus",
+    title: "Temporal Nexus",
+    category: "Game",
+    status: "Playable",
+    dates: "2024",
+    role: "Team project, USC",
+    summary:
+      "A PC game built around bending time, and the analytics pipeline that told us which levels were actually annoying.",
+    tags: ["Unity", "C#", "Analytics"],
+    sections: [
+      {
+        heading: "What it is",
+        body: [
+          "A Unity game made with a team at USC. The mechanic is time. The design problem is that a mechanic which is obvious in your own head is frequently unreadable in someone else’s hands.",
+        ],
+      },
+      {
+        heading: "The part that transferred",
+        body: [
+          "We instrumented it. Every playtest reported where players died, where they backtracked and where they gave up, and level design changed between iterations because of what came back rather than because of what we assumed.",
+          "That is the same loop as any other system: ship it, measure it, believe the measurement over your own taste.",
+        ],
+      },
+    ],
+    links: [{ label: "Play it", href: "https://george230310.github.io/526-Gold/index.html" }],
+    limitations: ["A team project. The engineering credit is shared."],
+    confirmed: false,
+  },
+  {
+    slug: "federated-identity",
+    title: "Identity and access management",
+    category: "Platform engineering",
+    status: "Shipped",
+    dates: "2021 — 2024",
+    role: "Identity and access engineer",
+    summary: "Worked on single sign-on and multi-factor authentication across 200 applications.",
+    tags: ["SAML", "OIDC", "Automation"],
+    sections: [
+      {
+        heading: "The problem",
+        body: [
+          "A large organisation accumulates applications faster than it can standardise them, and each one arrives wanting to handle its own logins. Every place that happens is a place credentials can leak. The job is to take that responsibility away from all of them without stopping any of them working.",
+        ],
+      },
+      {
+        heading: "The work",
+        body: [
+          "The team federated 200 applications onto a central identity provider across SAML, OIDC and PKCE flows, covering both workforce and customer sign-in. I was one engineer on that team; the count is the team's, not mine alone.",
+        ],
+      },
+      {
+        heading: "Decisions worth keeping",
+        points: [
+          {
+            title: "Certificate expiry is a calendar entry, not an incident",
+            body: "Signing certificates have a known lifetime. Renewal was built as a pipeline that runs before the date instead of an alert that fires after it, which removed a whole recurring class of outage from every federated integration at once.",
+          },
+          {
+            title: "Instrument the login, not just the server",
+            body: "Failed sign-ins, authentication latency and policy regressions went onto dashboards, because an identity problem reaches a user long before it shows up in a server metric.",
+          },
+        ],
+      },
+      {
+        heading: "Worked with",
+        body: ["PingFederate, Azure AD, Splunk, Grafana, Jenkins, Python and Docker."],
+      },
+    ],
+    withheld: "Enterprise work. Configuration and incident history are not mine to publish.",
+    confirmed: true,
+  },
   {
     slug: "published-research",
     title: "Three papers",
@@ -383,66 +397,6 @@ export const projects: Project[] = [
         href: "https://www.irjet.net/archives/V9/i8/IRJET-V9I8135.pdf",
       },
     ],
-    confirmed: true,
-  },
-
-  {
-    slug: "temporal-nexus",
-    title: "Temporal Nexus",
-    category: "Game",
-    status: "Playable",
-    dates: "2024",
-    role: "Team project, USC",
-    summary:
-      "A PC game built around bending time, and the analytics pipeline that told us which levels were actually annoying.",
-    tags: ["Unity", "C#", "Analytics"],
-    sections: [
-      {
-        heading: "What it is",
-        body: [
-          "A Unity game made with a team at USC. The mechanic is time. The design problem is that a mechanic which is obvious in your own head is frequently unreadable in someone else’s hands.",
-        ],
-      },
-      {
-        heading: "The part that transferred",
-        body: [
-          "We instrumented it. Every playtest reported where players died, where they backtracked and where they gave up, and level design changed between iterations because of what came back rather than because of what we assumed.",
-          "That is the same loop as any other system: ship it, measure it, believe the measurement over your own taste.",
-        ],
-      },
-    ],
-    links: [{ label: "Play it", href: "https://george230310.github.io/526-Gold/index.html" }],
-    limitations: ["A team project. The engineering credit is shared."],
-    confirmed: false,
-  },
-
-  {
-    slug: "travel-agent",
-    title: "A travel planner that shows its reasoning",
-    category: "Agents",
-    status: "Prototype",
-    dates: "2024",
-    role: "Personal project",
-    summary:
-      "A tool-using agent that turns a loose travel brief into a day-by-day itinerary it can defend.",
-    tags: ["LangChain", "Agents", "Python"],
-    sections: [
-      {
-        heading: "Why",
-        body: [
-          "I travel enough to have noticed that planning a trip is a constraint-satisfaction problem in a trench coat. Dates, budget, opening hours, and how far you are willing to drive before it stops being a holiday.",
-        ],
-      },
-      {
-        heading: "How",
-        body: [
-          "The agent decomposes the brief into those constraints, queries live sources for each, and assembles a plan day by day.",
-          "The part worth building was not the itinerary. It was making the agent state which constraint each choice was serving, so that a bad plan can be argued with instead of merely regenerated.",
-        ],
-      },
-    ],
-    links: [{ label: "Repository", href: "https://github.com/sriramgurazada/Travel_Agent" }],
-    limitations: ["A prototype. It has not been used by anybody but me."],
     confirmed: true,
   },
 ];

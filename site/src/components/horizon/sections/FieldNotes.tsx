@@ -26,7 +26,7 @@ export default function FieldNotes() {
           index="04"
           eyebrow="Field notes / the photography wall"
           heading="Every place leaves a pattern."
-          standfirst="Photographs from the same years as the work. I notice structure — cables, contours, grids, flow — and it turns out to be the same instinct."
+          standfirst="Photographs from the same years. A quieter place to look closer."
         />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-[1.62fr_1fr] lg:items-stretch">

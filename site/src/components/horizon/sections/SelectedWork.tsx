@@ -2,6 +2,7 @@ import Link from "next/link";
 import ChapterHeading from "@/components/horizon/ChapterHeading";
 import Photo from "@/components/Photo";
 import { art } from "@/data/artwork";
+import { nowBuilding } from "@/data/identity";
 import { featuredProjects } from "@/data/projects";
 
 /**
@@ -40,7 +41,7 @@ export default function SelectedWork() {
             index="02"
             eyebrow="Selected work"
             heading="Ideas made useful."
-            standfirst="Search, automation and systems that serve people. Three of them here; the rest are on the work page, including the ones that are only interesting to me."
+            standfirst="Current work first. The rest is on the work page."
           />
 
           <ol className="mt-14 border-t border-white/10">
@@ -75,6 +76,26 @@ export default function SelectedWork() {
                 </Link>
               </li>
             ))}
+
+            {/* Not a case study. One related area, still being built. */}
+            <li className="relative border-b border-white/10">
+              <div className="grid grid-cols-[2.5rem_1fr] items-baseline gap-x-4 py-7 sm:py-8">
+                <span
+                  aria-hidden="true"
+                  className="absolute top-9 -left-4 hidden h-1.5 w-1.5 rounded-full bg-route opacity-40 lg:block"
+                />
+                <span className="text-title font-semibold text-route/80">
+                  {String(featuredProjects.length + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 className="text-title font-semibold tracking-tight">{nowBuilding.title}</h3>
+                  <p className="mt-1 text-meta text-muted">
+                    {nowBuilding.category} · <span className="text-route/90">{nowBuilding.status}</span>
+                  </p>
+                  <p className="mt-2.5 max-w-[46ch] text-muted text-pretty">{nowBuilding.summary}</p>
+                </div>
+              </div>
+            </li>
           </ol>
 
           <Link

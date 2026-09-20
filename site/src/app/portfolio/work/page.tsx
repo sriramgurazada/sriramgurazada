@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SiteShell from "@/components/horizon/SiteShell";
-import { alsoBuilt, projects } from "@/data/projects";
+import { nowBuilding } from "@/data/identity";
+import { alsoBuilt, projects, type Project } from "@/data/projects";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -19,45 +20,35 @@ export default function WorkIndex() {
           Ideas made useful.
         </h1>
         <p className="reading mt-4 text-lede text-muted text-pretty">
-          Everything below is real. Where a project is internal or unreleased, the page says so
-          rather than inventing something to show you.
+          Selected projects and professional work.
         </p>
 
         <ol className="mt-16 border-t border-white/10">
-          {projects.map((project, index) => (
-            <li key={project.slug} className="group border-b border-white/10">
-              <Link
-                href={`/portfolio/work/${project.slug}`}
-                className="grid gap-3 py-8 lg:grid-cols-12 lg:items-baseline lg:gap-8"
-              >
-                <span className="label text-ivory lg:col-span-1">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
-                <div className="lg:col-span-6">
-                  <h2 className="text-title font-semibold tracking-tight transition-colors duration-200 group-hover:text-route">
-                    {project.title}
-                  </h2>
-                  <p className="mt-2 max-w-[48ch] text-muted text-pretty">{project.summary}</p>
-                </div>
-
-                <div className="lg:col-span-3">
-                  <p className="label">{project.category}</p>
-                  <p className="mt-1 text-meta text-route">{project.status}</p>
-                </div>
-
-                <div className="lg:col-span-2 lg:text-right">
-                  <p className="text-meta text-muted">{project.dates}</p>
-                </div>
-              </Link>
-            </li>
+          {projects.slice(0, 2).map((project, index) => (
+            <CaseRow key={project.slug} project={project} index={index} />
+          ))}
+          <li className="border-b border-white/10">
+            <div className="grid gap-3 py-8 lg:grid-cols-12 lg:items-baseline lg:gap-8">
+              <span className="label text-ivory lg:col-span-1">03</span>
+              <div className="lg:col-span-6">
+                <h2 className="text-title font-semibold tracking-tight">{nowBuilding.title}</h2>
+                <p className="mt-2 max-w-[48ch] text-muted text-pretty">{nowBuilding.summary}</p>
+              </div>
+              <div className="lg:col-span-3">
+                <p className="label">{nowBuilding.category}</p>
+                <p className="mt-1 text-meta text-route">{nowBuilding.status}</p>
+              </div>
+            </div>
+          </li>
+          {projects.slice(2).map((project, index) => (
+            <CaseRow key={project.slug} project={project} index={index + 3} />
           ))}
         </ol>
 
         <section className="mt-24">
           <h2 className="text-chapter font-semibold tracking-tight">Also built.</h2>
           <p className="reading mt-3 text-lede text-muted text-pretty">
-            Smaller, finished, and linked. Not stretched into case studies they cannot support.
+            Smaller, finished, and linked.
           </p>
 
           <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
@@ -78,5 +69,33 @@ export default function WorkIndex() {
         </section>
       </div>
     </SiteShell>
+  );
+}
+
+function CaseRow({ project, index }: { project: Project; index: number }) {
+  return (
+    <li className="group border-b border-white/10">
+      <Link
+        href={`/portfolio/work/${project.slug}`}
+        className="grid gap-3 py-8 lg:grid-cols-12 lg:items-baseline lg:gap-8"
+      >
+        <span className="label text-ivory lg:col-span-1">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <div className="lg:col-span-6">
+          <h2 className="text-title font-semibold tracking-tight transition-colors duration-200 group-hover:text-route">
+            {project.title}
+          </h2>
+          <p className="mt-2 max-w-[48ch] text-muted text-pretty">{project.summary}</p>
+        </div>
+        <div className="lg:col-span-3">
+          <p className="label">{project.category}</p>
+          <p className="mt-1 text-meta text-route">{project.status}</p>
+        </div>
+        <div className="lg:col-span-2 lg:text-right">
+          <p className="text-meta text-muted">{project.dates}</p>
+        </div>
+      </Link>
+    </li>
   );
 }
