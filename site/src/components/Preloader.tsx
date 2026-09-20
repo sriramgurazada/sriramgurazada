@@ -84,7 +84,7 @@ export default function Preloader() {
     >
       <div data-fade className="hud flex items-center justify-between">
         <span>{identity.shortName}</span>
-        <span className="hidden sm:inline">Los Angeles</span>
+        <span className="hidden sm:inline">{identity.location}</span>
       </div>
 
       <div data-fade className="flex flex-col items-center gap-6">
