@@ -5,8 +5,8 @@ import Photo from "@/components/Photo";
 import { gsap } from "@/lib/gsap";
 import { scene } from "@/lib/scene";
 import { photos } from "@/data/photos";
-import { capabilities, identity, pipeline } from "@/data/identity";
-import { aboutCopy } from "@/data/raw";
+import { identity, pipeline } from "@/data/identity";
+import { aboutCopy, recordSkills } from "@/data/raw";
 
 export default function Record() {
   const root = useRef<HTMLElement>(null);
@@ -109,7 +109,7 @@ export default function Record() {
             </div>
 
             <div data-record-reveal className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {capabilities.map((group) => (
+              {recordSkills.map((group) => (
                 <div key={group.group}>
                   <p className="hud mb-2.5 text-[0.55rem]">{group.group}</p>
                   <ul className="space-y-1">

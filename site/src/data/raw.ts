@@ -147,13 +147,13 @@ export const chapters: Chapter[] = [
         title: "Identity and access management",
         role: "IAM Engineering",
         body: "Worked on single sign-on and multi-factor authentication across 200 applications, as one engineer on a team. The count is the team's, not mine alone.",
-        stack: ["PingFederate", "Azure AD", "SAML", "OIDC", "PKCE"],
+        stack: ["SSO", "MFA", "SAML", "OIDC"],
       },
       {
         title: "Certificate Renewal Pipeline",
         role: "Reliability",
         body: "Signing certificates have a known lifetime, so renewal became a pipeline that runs before the date instead of an alert that fires after it. One recurring class of outage, removed from every federated integration at once.",
-        stack: ["PingFederate", "Jenkins", "Python"],
+        stack: ["Certificates", "Automation", "Python"],
       },
       {
         title: "Observability for Identity",
@@ -164,7 +164,7 @@ export const chapters: Chapter[] = [
     ],
     credits: [
       { label: "Applications", value: "200" },
-      { label: "Platforms", value: "Ping · Azure" },
+      { label: "Work", value: "SSO · MFA" },
       { label: "Class of Outage Removed", value: "Certificate Expiry" },
     ],
   },
@@ -343,4 +343,28 @@ export const aboutCopy = [
   "I build the parts of a system that people only notice when they fail — the login that has to work at 3am, the retrieval that has to admit when the corpus cannot answer, the certificate that cannot be allowed to expire.",
   "That started in India with research papers and a blockchain for health records, ran through several years of identity and access management, went through a master's at USC, and continues now in Dallas on search.",
   "The photographs are from the same years.",
+];
+
+/**
+ * Skills on The Record. Same groups as the readable site, but this list stays
+ * on methods and protocols — product names belong on a case page, not on the
+ * cinematic frame.
+ */
+export const recordSkills = [
+  {
+    group: "AI & Search",
+    items: ["Retrieval", "RAG", "Evaluation", "PyTorch", "Transformers", "LangChain", "FAISS"],
+  },
+  {
+    group: "Software Development",
+    items: ["Python", "Java", "TypeScript", "JavaScript", "SQL", "GraphQL", "C", "C#"],
+  },
+  {
+    group: "Cloud & Tools",
+    items: ["AWS", "Docker", "Kubernetes", "Jenkins", "MongoDB", "Splunk", "Grafana", "Node.js"],
+  },
+  {
+    group: "Identity & Access",
+    items: ["SSO", "MFA", "SAML", "OIDC", "OAuth"],
+  },
 ];
